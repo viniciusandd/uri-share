@@ -2,6 +2,7 @@
 
 {% block conteudo %}
     <form action="" method="POST">
+        {{ formulario.csrf_token }}
         <div class="form-group">
             <label>Usuário</label>
             {{ formulario.usuario(class="form-control", placeholder="Informe seu nome de usuário.") }}
