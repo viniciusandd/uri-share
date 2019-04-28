@@ -2,8 +2,8 @@ from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 
-from app.models.tables import Perfil
-from app.models.form import LoginForm
+from app.models.tables import Perfil, Cidade
+from app.models.form import LoginForm, PerfilForm
 
 @login_manager.user_loader
 def load_user(id):
@@ -13,9 +13,43 @@ def load_user(id):
 def raiz():
     return "Bem vindo ao Share!"
 
-@app.route("/registrar")
+@app.route("/registrar", methods=['GET', 'POST'])
 def registrar():
     formulario = PerfilForm()
+    formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
+    if formulario.validate_on_submit():
+        if formulario.senha.data == formulario.senha_confirmar.data:
+            perfil = Perfil(
+                formulario.razao_social.data,
+                formulario.nome_fantasia.data,
+                formulario.cnpj.data,
+                formulario.senha.data,
+                formulario.logradouro.data,
+                formulario.complemento.data,
+                formulario.numero.data,
+                formulario.bairro.data,
+                formulario.cep.data,
+                None,
+                dict(formulario.cidade_id.choices).get(formulario.cidade_id.data)
+            )
+            db.session.add(perfil)
+            bErro = False
+            try:
+                db.session.commit()
+            except Exception as e:
+                bErro = True
+                print('Falha ao inserir: % s' % e)
+            
+            if bErro:
+                flash("Não foi possível confirmar o registro, preencha os campos corretamente.")
+            else:
+                flash("Você foi registrado com sucesso")
+                return redirect(url_for("login"))
+                
+        else:
+            flash("As senhas digitadas são diferentes.")
+    else:
+        print(formulario.errors)
     return render_template('registrar.html', formulario=formulario)
 
 # Para que o login funcione, é necessário que o campo formulario.csrf_token

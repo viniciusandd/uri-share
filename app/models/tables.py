@@ -31,11 +31,11 @@ class Perfil(db.Model):
     def get_id(self):
         return str(self.id)
 
-    def __init__(self, razao_social, nome_fantasia, cnpj, senha):
-        self.razao_social = razao_social
-        self.nome_fantasia = nome_fantasia
-        self.cnpj = cnpj
-        self.senha = senha
+    # def __init__(self, razao_social, nome_fantasia, cnpj, senha):
+    #     self.razao_social = razao_social
+    #     self.nome_fantasia = nome_fantasia
+    #     self.cnpj = cnpj
+    #     self.senha = senha
 
     def __repr__(self):
         return "<Perfil %r>" % self.razao_social

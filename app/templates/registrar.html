@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 
@@ -25,43 +25,55 @@
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Registre uma conta</div>
       <div class="card-body">
-        <form>
+        <form action="" method="POST">
+          {{ formulario.csrf_token }}
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <div class="alert alert-warning" role="alert">
+                <ul class=flashes>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          {% endwith %}
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required="required">
-              <label for="inputEmail">Razão social</label>
+              {{ formulario.razao_social(id="inputRazaoSocial", class="form-control", placeholder="Razão social", required="required") }}
+              <label for="inputRazaoSocial">Razão social</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required="required">
-              <label for="inputEmail">Nome fantasia</label>
+              {{ formulario.nome_fantasia(id="inputNomeFantasia", class="form-control", placeholder="Nome fantasia", required="required") }}
+              <label for="inputNomeFantasia">Nome fantasia</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required="required">
-              <label for="inputEmail">CNPJ</label>
+              {{ formulario.cnpj(id="inputCnpj", class="form-control", placeholder="CNPJ", required="required") }}
+              <label for="inputCnpj">CNPJ</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required="required">
-              <label for="inputEmail">Logradouro</label>
+              {{ formulario.logradouro(id="inputLogradouro", class="form-control", placeholder="Logradouro", required="required") }}
+              <label for="inputLogradouro">Logradouro</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="text" id="firstName" class="form-control" placeholder="First name" required="required" autofocus="autofocus">
-                  <label for="firstName">Complemento</label>
+                  {{ formulario.complemento(id="inputComplemento", class="form-control", placeholder="Complemento") }}
+                  <label for="inputComplemento">Complemento</label>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="text" id="lastName" class="form-control" placeholder="Last name" required="required">
-                  <label for="lastName">Número</label>
+                  {{ formulario.numero(id="inputNumero", class="form-control", placeholder="Número", required="required") }}
+                  <label for="inputNumero">Número</label>
                 </div>
               </div>
             </div>
@@ -70,50 +82,49 @@
             <div class="form-row">
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="text" id="firstName" class="form-control" placeholder="First name" required="required" autofocus="autofocus">
-                  <label for="firstName">Bairro</label>
+                  {{ formulario.bairro(id="inputBairro", class="form-control", placeholder="Bairro", required="required") }}
+                  <label for="inputBairro">Bairro</label>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="text" id="lastName" class="form-control" placeholder="Last name" required="required">
-                  <label for="lastName">CEP</label>
+                  {{ formulario.cep(id="inputCep", class="form-control", placeholder="CEP", required="required") }}
+                  <label for="inputCep">CEP</label>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required="required">
-              <label for="inputEmail">Cidade</label>
+              {{ formulario.cidade_id(id="selectCidadeId", class="form-control", placeholder="Selecione sua cidade.", required="required") }}
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required="required">
-              <label for="inputEmail">Logo</label>
+              {{ formulario.logo(id="fileLogo", class="form-control") }}
+              <label for="fileLogo">Logo</label>
             </div>
           </div>                   
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-                  <label for="inputPassword">Senha</label>
+                  {{ formulario.senha(id="inputSenha", class="form-control", placeholder="Senha", required="required") }}
+                  <label for="inputSenha">Senha</label>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
-                  <label for="confirmPassword">Confirme a senha</label>
+                  {{ formulario.senha_confirmar(id="inputSenhaConfirmar", class="form-control", placeholder="Confirme a senha", required="required") }}
+                  <label for="inputSenhaConfirmar">Confirme a senha</label>
                 </div>
               </div>
             </div>
           </div>
-          <a class="btn btn-primary btn-block" href="login.html">Register</a>
+          <button type="submit" class="btn btn-primary btn-block">Registrar</button>
         </form>
         <div class="text-center">
-          <a class="d-block small mt-3" href="login.html">Já possuo uma conta</a>
+          <a class="d-block small mt-3" href="{{ url_for('login') }}">Já possuo uma conta</a>
         </div>
       </div>
     </div>
