@@ -64,8 +64,8 @@ def login():
         perfil = Perfil.query.filter_by(cnpj=formulario.cnpj.data).first()        
         if perfil and perfil.senha == formulario.senha.data:
             login_user(perfil)
-            flash("Login efetuado com sucesso.")
-            return redirect(url_for("home"))
+            # flash("Login efetuado com sucesso.")
+            return redirect(url_for('home'))
         else:
             flash("Credenciais inválidas.")
     else:
@@ -77,8 +77,13 @@ def login():
 def logout():
     logout_user()
     flash("Logout efetuado com sucesso.")
-    return redirect(url_for("index"))
+    return redirect(url_for('login'))
 
 @app.route("/home")
-def index():
+def home():
+    print(current_user.razao_social)
     return render_template('home.html')
+
+@app.route("/perfil")
+def perfil():
+    return render_template('perfil.html')

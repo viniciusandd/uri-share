@@ -16,6 +16,21 @@ class Perfil(db.Model):
     cidade_id     = db.Column(db.Integer, db.ForeignKey('cidades.id'))
     cidade        = db.relationship('Cidade', foreign_keys=cidade_id)
 
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)
+
     def __init__(
             self,
             razao_social,
@@ -40,27 +55,6 @@ class Perfil(db.Model):
         self.cep = cep
         self.logo = logo
         self.cidade_id = cidade_id
-
-    @property
-    def is_authenticated(self):
-        return True
-
-    @property
-    def is_active(self):
-        return True
-
-    @property
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return str(self.id)
-
-    # def __init__(self, razao_social, nome_fantasia, cnpj, senha):
-    #     self.razao_social = razao_social
-    #     self.nome_fantasia = nome_fantasia
-    #     self.cnpj = cnpj
-    #     self.senha = senha
 
     def __repr__(self):
         return "<Perfil %r>" % self.razao_social
