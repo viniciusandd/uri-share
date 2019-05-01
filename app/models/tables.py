@@ -16,6 +16,31 @@ class Perfil(db.Model):
     cidade_id     = db.Column(db.Integer, db.ForeignKey('cidades.id'))
     cidade        = db.relationship('Cidade', foreign_keys=cidade_id)
 
+    def __init__(
+            self,
+            razao_social,
+            nome_fantasia,
+            cnpj, senha,
+            logradouro,
+            complemento,
+            numero,
+            bairro,
+            cep,
+            logo,
+            cidade_id
+    ):
+        self.razao_social = razao_social
+        self.nome_fantasia = nome_fantasia
+        self.cnpj = cnpj
+        self.senha = senha
+        self.logradouro = logradouro
+        self.complemento = complemento
+        self.numero = numero
+        self.bairro = bairro
+        self.cep = cep
+        self.logo = logo
+        self.cidade_id = cidade_id
+
     @property
     def is_authenticated(self):
         return True

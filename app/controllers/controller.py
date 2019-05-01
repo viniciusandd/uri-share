@@ -18,6 +18,8 @@ def registrar():
     formulario = PerfilForm()
     formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
     if formulario.validate_on_submit():
+        # print(dict(formulario.cidade_id.choices).get(formulario.cidade_id.data))
+        # print(formulario.cidade_id.data)
         if formulario.senha.data == formulario.senha_confirmar.data:
             perfil = Perfil(
                 formulario.razao_social.data,
@@ -30,7 +32,7 @@ def registrar():
                 formulario.bairro.data,
                 formulario.cep.data,
                 None,
-                dict(formulario.cidade_id.choices).get(formulario.cidade_id.data)
+                formulario.cidade_id.data
             )
             db.session.add(perfil)
             bErro = False
@@ -43,13 +45,14 @@ def registrar():
             if bErro:
                 flash("Não foi possível confirmar o registro, preencha os campos corretamente.")
             else:
-                flash("Você foi registrado com sucesso")
+                flash("Você foi registrado com sucesso.")
                 return redirect(url_for("login"))
                 
         else:
             flash("As senhas digitadas são diferentes.")
     else:
         print(formulario.errors)
+
     return render_template('registrar.html', formulario=formulario)
 
 # Para que o login funcione, é necessário que o campo formulario.csrf_token
