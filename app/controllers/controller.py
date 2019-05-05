@@ -87,5 +87,10 @@ def home():
     return render_template('home.html')
 
 @app.route("/perfil")
-def perfil():    
-    return render_template('perfil.html', perfil=current_user)
+@app.route("/perfil/<int:id>")
+def perfil(id=None):
+    if id:
+        perfil = Perfil.query.filter_by(id=id).first()
+    else:
+        perfil = current_user
+    return render_template('perfil.html', perfil=perfil)
