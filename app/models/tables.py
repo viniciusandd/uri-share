@@ -3,17 +3,18 @@ from app import db
 class Perfil(db.Model):
     __tablename__ = "perfis"
     id            = db.Column(db.Integer, primary_key=True)
-    razao_social  = db.Column(db.String, unique=True)
-    nome_fantasia = db.Column(db.String)
-    cnpj          = db.Column(db.String(14), unique=True)
-    senha         = db.Column(db.String)
-    logradouro    = db.Column(db.String)
+    razao_social  = db.Column(db.String, unique=True, nullable=False)
+    nome_fantasia = db.Column(db.String, nullable=False)
+    cnpj          = db.Column(db.String(14), unique=True, nullable=False)
+    senha         = db.Column(db.String, nullable=False)
+    logradouro    = db.Column(db.String, nullable=False)
     complemento   = db.Column(db.String)
-    numero        = db.Column(db.String)
-    bairro        = db.Column(db.String)
-    cep           = db.Column(db.String(8))
+    numero        = db.Column(db.String, nullable=False)
+    bairro        = db.Column(db.String, nullable=False)
+    cep           = db.Column(db.String(8), nullable=False)
     logo          = db.Column(db.BLOB)
-    cidade_id     = db.Column(db.Integer, db.ForeignKey('cidades.id'))
+    sobre         = db.Column(db.String, nullable=False)
+    cidade_id     = db.Column(db.Integer, db.ForeignKey('cidades.id'), nullable=False)
     cidade        = db.relationship('Cidade', foreign_keys=cidade_id)
 
     @property
@@ -42,19 +43,21 @@ class Perfil(db.Model):
             bairro,
             cep,
             logo,
+            sobre,
             cidade_id
     ):
-        self.razao_social = razao_social
+        self.razao_social  = razao_social
         self.nome_fantasia = nome_fantasia
-        self.cnpj = cnpj
-        self.senha = senha
-        self.logradouro = logradouro
-        self.complemento = complemento
-        self.numero = numero
-        self.bairro = bairro
-        self.cep = cep
-        self.logo = logo
-        self.cidade_id = cidade_id
+        self.cnpj          = cnpj
+        self.senha         = senha
+        self.logradouro    = logradouro
+        self.complemento   = complemento
+        self.numero        = numero
+        self.bairro        = bairro
+        self.cep           = cep
+        self.logo          = logo
+        self.sobre         = sobre
+        self.cidade_id     = cidade_id
 
     def __repr__(self):
         return "<Perfil %r>" % self.razao_social

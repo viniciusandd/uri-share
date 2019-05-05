@@ -20,6 +20,7 @@ def registrar():
     if formulario.validate_on_submit():
         # print(dict(formulario.cidade_id.choices).get(formulario.cidade_id.data))
         # print(formulario.cidade_id.data)
+        print(formulario.sobre.data)
         if formulario.senha.data == formulario.senha_confirmar.data:
             perfil = Perfil(
                 formulario.razao_social.data,
@@ -32,6 +33,7 @@ def registrar():
                 formulario.bairro.data,
                 formulario.cep.data,
                 None,
+                formulario.sobre.data,
                 formulario.cidade_id.data
             )
             db.session.add(perfil)
@@ -85,5 +87,5 @@ def home():
     return render_template('home.html')
 
 @app.route("/perfil")
-def perfil():
-    return render_template('perfil.html')
+def perfil():    
+    return render_template('perfil.html', perfil=current_user)
