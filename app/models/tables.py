@@ -107,6 +107,7 @@ class Postagem(db.Model):
     id              = db.Column(db.Integer, primary_key=True)
     perfil_id       = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
     categoria_id    = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
+    titulo          = db.Column(db.Text, nullable=False)
     conteudo        = db.Column(db.Text, nullable=False)
     data            = db.Column(db.Date, nullable=False)
     hora            = db.Column(db.Time, nullable=False)
