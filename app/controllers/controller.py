@@ -17,11 +17,9 @@ def raiz():
 def registrar():
     formulario = PerfilForm()
     formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
-    print(formulario.interesses.data)
     if formulario.validate_on_submit():
         # print(dict(formulario.cidade_id.choices).get(formulario.cidade_id.data))
         # print(formulario.cidade_id.data)
-        print(formulario.sobre.data)
         if formulario.senha.data == formulario.senha_confirmar.data:
             perfil = Perfil(
                 formulario.razao_social.data,
@@ -35,6 +33,7 @@ def registrar():
                 formulario.cep.data,
                 None,
                 formulario.sobre.data,
+                formulario.tags_digitadas.data,
                 formulario.cidade_id.data
             )
             db.session.add(perfil)

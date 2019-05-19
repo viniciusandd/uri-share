@@ -14,6 +14,7 @@ class Perfil(db.Model):
     cep           = db.Column(db.String(8), nullable=False)
     logo          = db.Column(db.BLOB)
     sobre         = db.Column(db.String, nullable=False)
+    interesses    = db.Column(db.String)
     cidade_id     = db.Column(db.Integer, db.ForeignKey('cidades.id'), nullable=False)
     cidade        = db.relationship('Cidade', foreign_keys=cidade_id)
 
@@ -44,6 +45,7 @@ class Perfil(db.Model):
             cep,
             logo,
             sobre,
+            interesses,
             cidade_id
     ):
         self.razao_social  = razao_social
@@ -57,6 +59,7 @@ class Perfil(db.Model):
         self.cep           = cep
         self.logo          = logo
         self.sobre         = sobre
+        self.interesses    = interesses
         self.cidade_id     = cidade_id
 
     def __repr__(self):
