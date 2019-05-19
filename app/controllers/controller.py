@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 
-from app.models.tables import Perfil, Cidade, Categoria
+from app.models.tables import Perfil, Cidade, Postagem, Categoria
 from app.models.forms import LoginForm, PerfilForm
 
 @login_manager.user_loader
@@ -88,11 +88,12 @@ def home():
         # return redirect('login') 
 
     categorias_id = buscar_categorias_id()
-    postagens = buscar_postagens(categorias_id)
-
-    print(postagens)
+    postagens     = buscar_postagens(categorias_id)
     
-    return render_template('home.html')
+    for postagem in postagens:
+        print("ID: %s | Cont: %s" % (postagem.id, postagem.conteudo))
+
+    return render_template('home.html', postagens=postagens)
 
 def buscar_categorias_id():
     interesses     = current_user.interesses
@@ -100,18 +101,18 @@ def buscar_categorias_id():
     qtd_interesses = len(interesses)
     interesses.pop(qtd_interesses - 1)
 
-    categorias_id = []
+    list_categorias_id = []
     for interesse in interesses:
         categoria = Categoria.query.filter_by(descricao=interesse).first()
         if categoria:
-            categorias_id.append(categoria.id)
-    return categorias_id
+            list_categorias_id.append(categoria.id)
+    tuple_categorias_id = tuple(list_categorias_id)
+
+    return tuple_categorias_id
 
 def buscar_postagens(categorias_id):
-    categorias = db.session.query(Categoria).filter(Categoria.id.in_(categorias_id)).all()
-
-    for i in categorias:
-        print(i.descricao)
+    postagens = db.session.query(Postagem).filter(Postagem.categoria_id.in_(categorias_id)).all()
+    return postagens
 
 @app.route("/perfil")
 @app.route("/perfil/<int:id>")
