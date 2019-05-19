@@ -64,23 +64,40 @@ class Perfil(db.Model):
 
 class Cidade(db.Model):
     __tablename__ = "cidades"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String)
+    id        = db.Column(db.Integer, primary_key=True)
+    nome      = db.Column(db.String)
     estado_id = db.Column(db.Integer, db.ForeignKey('estados.id'))
-    estado = db.relationship('Estado', foreign_keys=estado_id)
+    estado    = db.relationship('Estado', foreign_keys=estado_id)
 
 class Estado(db.Model):
     __tablename__ = "estados"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String)
-    sigla = db.Column(db.String(2), unique=True)
+    id      = db.Column(db.Integer, primary_key=True)
+    nome    = db.Column(db.String)
+    sigla   = db.Column(db.String(2), unique=True)
     pais_id = db.Column(db.Integer, db.ForeignKey('paises.id'))
-    pais = db.relationship('Pais', foreign_keys=pais_id)
+    pais    = db.relationship('Pais', foreign_keys=pais_id)
 
 class Pais(db.Model):
     __tablename__ = "paises"
     id    = db.Column(db.Integer, primary_key=True)
     nome  = db.Column(db.String)
+
+class Categoria(db.Model):
+    __tablename__ = "categorias"
+    id        = db.Column(db.Integer, primary_key=True)
+    descricao = db.Column(db.String)
+
+class Interesse(db.Model):
+    __tablename__ = "interesses"
+    id            = db.Column(db.Integer, primary_key=True)
+    perfil_id     = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
+    categoria_id  = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
+    perfil        = db.relationship('Perfil', foreign_keys=perfil_id)
+    categoria     = db.relationship('Categoria', foreign_keys=categoria_id)
+
+    def __init__(self, perfil_id, categoria_id):
+        self.perfil_id    = perfil_id
+        self.categoria_id = categoria_id
 
 # class Postagem(db.Model):
 #     __tablename__   = "postagens"
@@ -110,11 +127,3 @@ class Pais(db.Model):
 
 #     def __repr__(self):
 #         return "<Comentario %r>" % self.id
-
-class Categoria(db.Model):
-    __tablename__ = "categorias"
-    id        = db.Column(db.Integer, primary_key=True)
-    descricao = db.Column(db.String)
-
-    def __init__(self, descricao):
-        self.descricao = descricao

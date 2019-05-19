@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 
 from app.models.tables import Perfil, Cidade
-from app.models.form import LoginForm, PerfilForm
+from app.models.forms import LoginForm, PerfilForm
 
 @login_manager.user_loader
 def load_user(id):
@@ -17,6 +17,7 @@ def raiz():
 def registrar():
     formulario = PerfilForm()
     formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
+    print(formulario.interesses.data)
     if formulario.validate_on_submit():
         # print(dict(formulario.cidade_id.choices).get(formulario.cidade_id.data))
         # print(formulario.cidade_id.data)

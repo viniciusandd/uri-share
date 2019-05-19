@@ -17,6 +17,9 @@
   <!-- Custom styles for this template-->
   <link href="{{ url_for('static', filename='css/sb-admin.css') }}" rel="stylesheet">
 
+  <!-- CSS externo -->
+  <link href="{{ url_for('static', filename='css/tags.css') }}" rel="stylesheet">
+
 </head>
 
 <body class="bg-dark">
@@ -109,7 +112,13 @@
             <div class="form-label-group">
               {{ formulario.sobre(id="textAreaSobre", class="form-control", placeholder="Conte-nos um pouco sobre sua empresa.", required="required") }}              
             </div>
-          </div>                            
+          </div>
+          <div class="form-group">
+            <div class="form-label-group tag-container">
+              {{ formulario.interesses(id="inputInteresses", placeholder="Quais temas/assuntos são do interesse de sua empresa?.") }}              
+            </div>
+          </div>
+          {{ formulario.tags_digitadas(id="inputTagsDigitadas") }}
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
@@ -134,6 +143,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Arquivos externos -->
+  <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>

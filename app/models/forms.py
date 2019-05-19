@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, FileField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, FileField, SelectField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
@@ -20,4 +20,6 @@ class PerfilForm(FlaskForm):
     cep             = StringField("cep", validators=[DataRequired()])
     logo            = FileField("logo")
     sobre           = TextAreaField("sobre", validators=[DataRequired()])
+    interesses      = StringField("interesses")
+    tags_digitadas  = HiddenField("tags_digitadas")
     cidade_id       = SelectField("cidade", coerce=int)
