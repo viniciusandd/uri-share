@@ -1,4 +1,5 @@
 from app import db
+import datetime
 
 class Perfil(db.Model):
     __tablename__ = "perfis"
@@ -88,7 +89,7 @@ class Pais(db.Model):
 class Categoria(db.Model):
     __tablename__ = "categorias"
     id        = db.Column(db.Integer, primary_key=True)
-    descricao = db.Column(db.String)
+    descricao = db.Column(db.String, unique=True, nullable=False)
 
 class Interesse(db.Model):
     __tablename__ = "interesses"
@@ -114,6 +115,15 @@ class Postagem(db.Model):
     media_avaliacao = db.Column(db.Float)
     perfil          = db.relationship('Perfil', foreign_keys=perfil_id)
     categoria       = db.relationship('Categoria', foreign_keys=categoria_id)
+
+    def formatar_data(self):
+        data = str(self.data)
+        print(data)
+        array_data = data.split("-")
+        print(array_data) 
+        data = datetime.datetime(int(array_data[0]), int(array_data[1]), int(array_data[2]))
+        
+        return data.strftime("%b %d")
 
     def __repr__(self):
         return "<Postagem %r>" % self.id
