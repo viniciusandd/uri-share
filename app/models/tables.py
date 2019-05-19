@@ -102,20 +102,27 @@ class Interesse(db.Model):
         self.perfil_id    = perfil_id
         self.categoria_id = categoria_id
 
-# class Postagem(db.Model):
-#     __tablename__   = "postagens"
-#     id              = db.Column(db.Integer, primary_key=True)
-#     perfil_id       = db.Column(db.Integer, db.ForeignKey('perfis.id'))
-#     categoria_id    = db.Column(db.Integer, db.ForeignKey('categorias.id'))
-#     conteudo        = db.Column(db.Text)
-#     data            = db.Column(db.Date)
-#     hora            = db.Column(db.Time)
-#     media_avaliacao = db.Column(db.Float)
-#     perfil          = db.relationship('Perfil', foreign_keys=perfil_id)
-#     categoria       = db.relationship('Categoria', foreign_keys=categoria_id)
+class Postagem(db.Model):
+    __tablename__   = "postagens"
+    id              = db.Column(db.Integer, primary_key=True)
+    perfil_id       = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
+    categoria_id    = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
+    conteudo        = db.Column(db.Text, nullable=False)
+    data            = db.Column(db.Date, nullable=False)
+    hora            = db.Column(db.Time, nullable=False)
+    media_avaliacao = db.Column(db.Float)
+    perfil          = db.relationship('Perfil', foreign_keys=perfil_id)
+    categoria       = db.relationship('Categoria', foreign_keys=categoria_id)
 
-#     def __repr__(self):
-#         return "<Postagem %r>" % self.id
+    def __repr__(self):
+        return "<Postagem %r>" % self.id
+
+class Avaliacao(db.Model):
+    __tablename__ = "avaliacoes"
+    id          = db.Column(db.Integer, primary_key=True)
+    postagem_id = db.Column(db.Integer, db.ForeignKey('postagens.id'), nullable=False)
+    nota        = db.Column(db.Integer, nullable=False)
+    postagem    = db.relationship('Postagem', foreign_keys=postagem_id)
 
 # class Comentario(db.Model):
 #     __tablename__ = "comentarios"

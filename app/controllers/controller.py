@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 
-from app.models.tables import Perfil, Cidade
+from app.models.tables import Perfil, Cidade, Categoria
 from app.models.forms import LoginForm, PerfilForm
 
 @login_manager.user_loader
@@ -82,9 +82,36 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route("/home")
-def home():
-    print(current_user.razao_social)
+def home():    
+    # if not current_user.is_authenticated:
+        # flash("Login não efetuado.")
+        # return redirect('login') 
+
+    categorias_id = buscar_categorias_id()
+    postagens = buscar_postagens(categorias_id)
+
+    print(postagens)
+    
     return render_template('home.html')
+
+def buscar_categorias_id():
+    interesses     = current_user.interesses
+    interesses     = interesses.split(",")
+    qtd_interesses = len(interesses)
+    interesses.pop(qtd_interesses - 1)
+
+    categorias_id = []
+    for interesse in interesses:
+        categoria = Categoria.query.filter_by(descricao=interesse).first()
+        if categoria:
+            categorias_id.append(categoria.id)
+    return categorias_id
+
+def buscar_postagens(categorias_id):
+    categorias = db.session.query(Categoria).filter(Categoria.id.in_(categorias_id)).all()
+
+    for i in categorias:
+        print(i.descricao)
 
 @app.route("/perfil")
 @app.route("/perfil/<int:id>")
