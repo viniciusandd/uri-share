@@ -47,6 +47,8 @@ p {
   top: 0px;
   z-index: 9;
 }
+.timeline .timeline-body .timeline-item .actions {
+}
 .timeline .timeline-body .timeline-item .time {
   position: absolute;
   left: -85px;
@@ -55,8 +57,8 @@ p {
   font-size: 13px;
 }
 .timeline .timeline-body .timeline-item .content {
-  margin: 40px;
-  padding-bottom: 40px;
+  margin: 20px;
+  padding-bottom: 20px;
   border-bottom: 1px dashed #555;
 }
 .timeline .timeline-body .timeline-item .content .title {
