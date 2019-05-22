@@ -23,3 +23,8 @@ class PerfilForm(FlaskForm):
     interesses      = StringField("interesses")
     tags_digitadas  = HiddenField("tags_digitadas")
     cidade_id       = SelectField("cidade", coerce=int)
+
+class PostagemForm(FlaskForm):
+    titulo       = StringField("titulo", validators=[DataRequired()])
+    conteudo     = TextAreaField("conteudo", validators=[DataRequired()])
+    categoria_id = SelectField("categoria", coerce=int)

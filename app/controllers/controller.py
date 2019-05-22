@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 
 from app.models.tables import Perfil, Cidade, Postagem, Categoria
-from app.models.forms import LoginForm, PerfilForm
+from app.models.forms import LoginForm, PerfilForm, PostagemForm
 
 @login_manager.user_loader
 def load_user(id):
@@ -122,3 +122,9 @@ def perfil(id=None):
     else:
         perfil = current_user
     return render_template('perfil.html', perfil=perfil)
+
+@app.route("/nova_postagem", methods=['GET', 'POST'])
+def nova_postagem():
+    formulario = PostagemForm()
+    formulario.categoria_id.choices = [(g.id, g.descricao) for g in Categoria.query.order_by('descricao')]
+    return render_template('postagem.html', formulario=formulario)
