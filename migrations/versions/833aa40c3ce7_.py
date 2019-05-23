@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 62413141a666
+Revision ID: 833aa40c3ce7
 Revises: 
-Create Date: 2019-05-19 15:46:24.398131
+Create Date: 2019-05-23 01:29:54.718863
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '62413141a666'
+revision = '833aa40c3ce7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -77,10 +77,10 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('perfil_id', sa.Integer(), nullable=False),
     sa.Column('categoria_id', sa.Integer(), nullable=False),
-    sa.Column('titulo', sa.Text(), nullable=False),
-    sa.Column('conteudo', sa.Text(), nullable=False),
-    sa.Column('data', sa.Date(), nullable=False),
-    sa.Column('hora', sa.Time(), nullable=False),
+    sa.Column('titulo', sa.String(), nullable=False),
+    sa.Column('conteudo', sa.String(), nullable=False),
+    sa.Column('data', sa.String(), nullable=False),
+    sa.Column('hora', sa.String(), nullable=False),
     sa.Column('media_avaliacao', sa.Float(), nullable=True),
     sa.ForeignKeyConstraint(['categoria_id'], ['categorias.id'], ),
     sa.ForeignKeyConstraint(['perfil_id'], ['perfis.id'], ),

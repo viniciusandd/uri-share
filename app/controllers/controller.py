@@ -127,4 +127,24 @@ def perfil(id=None):
 def nova_postagem():
     formulario = PostagemForm()
     formulario.categoria_id.choices = [(g.id, g.descricao) for g in Categoria.query.order_by('descricao')]
+    if formulario.validate_on_submit():
+        postagem = Postagem(
+            current_user.id, 
+            formulario.categoria_id.data,
+            formulario.titulo.data,
+            formulario.conteudo.data
+        )
+        db.session.add(postagem)
+        bErro = False
+        try:
+            db.session.commit()
+        except Exception as e:
+            bErro = True
+            print('Falha ao inserir: % s' % e)
+        
+        if bErro:
+            flash("Falha ao compartilhar a postagem.")
+        else:
+            flash("Postagem compartilhada com sucesso.")
+               
     return render_template('postagem.html', formulario=formulario)

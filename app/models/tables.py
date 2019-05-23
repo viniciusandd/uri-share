@@ -1,5 +1,6 @@
 from app import db
 import datetime
+from app.models.funcoes import Funcoes
 
 class Perfil(db.Model):
     __tablename__ = "perfis"
@@ -108,13 +109,21 @@ class Postagem(db.Model):
     id              = db.Column(db.Integer, primary_key=True)
     perfil_id       = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
     categoria_id    = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
-    titulo          = db.Column(db.Text, nullable=False)
-    conteudo        = db.Column(db.Text, nullable=False)
-    data            = db.Column(db.Date, nullable=False)
-    hora            = db.Column(db.Time, nullable=False)
+    titulo          = db.Column(db.String, nullable=False)
+    conteudo        = db.Column(db.String, nullable=False)
+    data            = db.Column(db.String, nullable=False)
+    hora            = db.Column(db.String, nullable=False)
     media_avaliacao = db.Column(db.Float)
     perfil          = db.relationship('Perfil', foreign_keys=perfil_id)
     categoria       = db.relationship('Categoria', foreign_keys=categoria_id)
+
+    def __init__(self, perfil_id, categoria_id, titulo, conteudo):
+        self.perfil_id    = perfil_id
+        self.categoria_id = categoria_id
+        self.titulo       = titulo
+        self.conteudo     = conteudo
+        self.data         = Funcoes.retornar_data_atual()
+        self.hora         = Funcoes.retornar_hora_atual()
 
     def formatar_data(self):
         data = str(self.data)
