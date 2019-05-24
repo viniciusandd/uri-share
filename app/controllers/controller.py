@@ -101,11 +101,13 @@ def buscar_categorias_id():
     qtd_interesses = len(interesses)
     interesses.pop(qtd_interesses - 1)
 
+    categorias = Categoria.query.all()
     list_categorias_id = []
-    for interesse in interesses:
-        categoria = Categoria.query.filter_by(descricao=interesse).first()
-        if categoria:
-            list_categorias_id.append(categoria.id)
+    for categoria in categorias:
+        for interesse in interesses:
+            if categoria.descricao.lower() == interesse.lower():
+                list_categorias_id.append(categoria.id)
+                break
 
     tuple_categorias_id = tuple(list_categorias_id)
 
