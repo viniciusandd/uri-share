@@ -106,12 +106,13 @@ def buscar_categorias_id():
         categoria = Categoria.query.filter_by(descricao=interesse).first()
         if categoria:
             list_categorias_id.append(categoria.id)
+            
     tuple_categorias_id = tuple(list_categorias_id)
 
     return tuple_categorias_id
 
 def buscar_postagens(categorias_id):
-    postagens = db.session.query(Postagem).filter(Postagem.categoria_id.in_(categorias_id)).all()
+    postagens = db.session.query(Postagem).filter(Postagem.categoria_id.in_(categorias_id)).order_by(Postagem.data.desc()).all()
     return postagens
 
 @app.route("/perfil")
