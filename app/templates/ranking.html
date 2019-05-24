@@ -1,0 +1,50 @@
+{% extends 'blank.html' %}
+
+{% block titulo %}
+    {{ super() }} - Ranking
+{% endblock %}
+
+{% block conteudo %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Perfil</th>
+      <th scope="col">Título</th>
+      <th scope="col">Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">#1 <i class="fas fa-trophy"></i></th>
+      <td>Amazon</td>
+      <td>Administrando seu UbuntuServer</td>
+      <td>21/05/2019</td>
+    </tr>
+    <tr>
+      <th scope="row">#2 <i class="fas fa-award"></i></th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>21/05/2019</td>
+    </tr>
+    <tr>
+      <th scope="row">#3 <i class="fas fa-medal"></i></th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>21/05/2019</td>
+    </tr>
+    <tr>
+      <th scope="row">#4</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>21/05/2019</td>
+    </tr>
+    <tr>
+      <th scope="row">#5</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>21/05/2019</td>
+    </tr>        
+  </tbody>
+</table>
+{% endblock %}

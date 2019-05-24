@@ -151,3 +151,11 @@ def nova_postagem():
             flash("Postagem compartilhada com sucesso.")
                
     return render_template('postagem.html', formulario=formulario)
+
+@app.route("/buscar")
+def buscar():
+    return render_template('buscas.html')
+
+@app.route("/ranking")
+def ranking():
+    return render_template('ranking.html')
