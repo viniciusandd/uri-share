@@ -1,6 +1,9 @@
+import os
+
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
+from werkzeug.utils import secure_filename
 
 from app.models.tables import Perfil, Cidade, Postagem, Categoria
 from app.models.forms import LoginForm, PerfilForm, PostagemForm
@@ -18,9 +21,16 @@ def registrar():
     formulario = PerfilForm()
     formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
     if formulario.validate_on_submit():
-        # print(dict(formulario.cidade_id.choices).get(formulario.cidade_id.data))
-        # print(formulario.cidade_id.data)
         if formulario.senha.data == formulario.senha_confirmar.data:
+            filename = secure_filename(formulario.logo.data.filename)
+            dot = filename.find('.')
+            len_filename = len(filename)
+            new_filename = formulario.cnpj.data + filename[dot:]
+            formulario.logo.data.save(
+                os.path.join(
+                    'app', 'static', 'assets', 'logos', new_filename
+                )
+            )
             perfil = Perfil(
                 formulario.razao_social.data,
                 formulario.nome_fantasia.data,
@@ -31,25 +41,31 @@ def registrar():
                 formulario.numero.data,
                 formulario.bairro.data,
                 formulario.cep.data,
-                None,
                 formulario.sobre.data,
                 formulario.tags_digitadas.data,
-                formulario.cidade_id.data
+                formulario.cidade_id.data,
+                new_filename
             )
             db.session.add(perfil)
             bErro = False
+            sMsgErro = ""
             try:
-                db.session.commit()
+                db.session.commit()       
             except Exception as e:
+                print(e)
                 bErro = True
-                print('Falha ao inserir: % s' % e)
+                sMsgErro = "Falha ao registrar o perfil, revise suas informações."
             
             if bErro:
-                flash("Não foi possível confirmar o registro, preencha os campos corretamente.")
+                flash(sMsgErro)
+                os.remove(
+                    os.path.join(
+                        'app', 'static', 'assets', 'logos', new_filename
+                    )
+                )
             else:
                 flash("Você foi registrado com sucesso.")
                 return redirect(url_for("login"))
-                
         else:
             flash("As senhas digitadas são diferentes.")
     else:
@@ -121,12 +137,17 @@ def buscar_postagens(categorias_id):
 
 @app.route("/perfil")
 @app.route("/perfil/<int:id>")
-def perfil(id=None):
+def perfil(id=None):    
     if id:
         perfil = Perfil.query.filter_by(id=id).first()
     else:
         perfil = current_user
-    return render_template('perfil.html', perfil=perfil)
+
+    logotipo = ".../.../%s" % perfil.logo
+
+    print(logotipo)
+
+    return render_template('perfil.html', perfil=perfil, logotipo=logotipo)
 
 @app.route("/nova_postagem", methods=['GET', 'POST'])
 def nova_postagem():

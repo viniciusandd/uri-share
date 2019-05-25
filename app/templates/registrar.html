@@ -28,7 +28,7 @@
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Registre uma conta</div>
       <div class="card-body">
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
           {{ formulario.csrf_token }}
           {% with messages = get_flashed_messages() %}
             {% if messages %}

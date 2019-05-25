@@ -13,12 +13,12 @@ class Perfil(db.Model):
     complemento   = db.Column(db.String)
     numero        = db.Column(db.String, nullable=False)
     bairro        = db.Column(db.String, nullable=False)
-    cep           = db.Column(db.String(8), nullable=False)
-    logo          = db.Column(db.BLOB)
+    cep           = db.Column(db.String(8), nullable=False)    
     sobre         = db.Column(db.String, nullable=False)
     interesses    = db.Column(db.String)
     cidade_id     = db.Column(db.Integer, db.ForeignKey('cidades.id'), nullable=False)
     cidade        = db.relationship('Cidade', foreign_keys=cidade_id)
+    logo          = db.Column(db.String, nullable=False)
 
     @property
     def is_authenticated(self):
@@ -44,11 +44,11 @@ class Perfil(db.Model):
             complemento,
             numero,
             bairro,
-            cep,
-            logo,
+            cep,            
             sobre,
             interesses,
-            cidade_id
+            cidade_id,
+            logo
     ):
         self.razao_social  = razao_social
         self.nome_fantasia = nome_fantasia
@@ -58,11 +58,11 @@ class Perfil(db.Model):
         self.complemento   = complemento
         self.numero        = numero
         self.bairro        = bairro
-        self.cep           = cep
-        self.logo          = logo
+        self.cep           = cep        
         self.sobre         = sobre
         self.interesses    = interesses
         self.cidade_id     = cidade_id
+        self.logo          = logo
 
     def __repr__(self):
         return "<Perfil %r>" % self.razao_social
