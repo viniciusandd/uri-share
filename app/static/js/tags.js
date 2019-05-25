@@ -10,7 +10,7 @@ function createTag(label) {
   const span = document.createElement('span');
   span.innerHTML = label;
   const closeIcon = document.createElement('i');
-  closeIcon.innerHTML = 'close';
+  closeIcon.innerHTML = ' x ';
   closeIcon.setAttribute('class', 'material-icons');
   closeIcon.setAttribute('data-item', label);
   div.appendChild(span);
@@ -35,15 +35,23 @@ function addTags() {
 }
 
 input.addEventListener('keyup', (e) => {
-    console.log(e);
+    console.log(e);    
+    var inputLenght = e.target.value.length;
     if (e.key === "Control") {
-      e.target.value.split(',').forEach(tag => {
-        tags.push(tag);
-      });
-      
-      addTags();
-      input.value = '';
-    }
+      if (inputLenght > 0) {
+        e.target.value.split(',').forEach(tag => {
+          tags.push(tag);
+        });
+        
+        addTags();
+        input.value = '';        
+      } else {
+        bootbox.alert({
+          message: "Não é possível criar uma tag sem nenhuma informação",
+          size: 'large'
+        });
+      }
+    } 
 });
 
 document.addEventListener('click', (e) => {

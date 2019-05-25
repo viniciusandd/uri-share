@@ -148,11 +148,12 @@ def nova_postagem():
         if bErro:
             flash("Falha ao compartilhar a postagem.")
         else:
-            flash("Postagem compartilhada com sucesso.")
+            # flash("Postagem compartilhada com sucesso.")
+            return redirect(url_for('home'))
                
     return render_template('postagem.html', formulario=formulario)
 
-@app.route("/buscar")
+@app.route("/buscar/<parametro>")
 def buscar():
     return render_template('buscas.html')
 
