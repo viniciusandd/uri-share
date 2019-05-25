@@ -5,8 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  padding: 6px;
-  overflow-x: scroll;
+  /* padding: 6px; */
 }
 .tag-container .tag {
   height: 30px;

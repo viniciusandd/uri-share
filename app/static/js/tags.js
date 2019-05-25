@@ -35,12 +35,12 @@ function addTags() {
 }
 
 input.addEventListener('keyup', (e) => {
-    console.log(e);    
+    console.log(e.key);    
     var inputLenght = e.target.value.length;
-    if (e.key === "Control") {
+    if (e.keyCode === 32) {
       if (inputLenght > 0) {
         e.target.value.split(',').forEach(tag => {
-          tags.push(tag);
+          tags.push(tag.trim());
         });
         
         addTags();

@@ -110,13 +110,15 @@
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              {{ formulario.sobre(id="textAreaSobre", class="form-control", placeholder="Conte-nos um pouco sobre sua empresa.", required="required") }}              
+              {{ formulario.sobre(id="textAreaSobre", class="form-control", required="required") }}              
             </div>
+            <span class="help-block"> Conte-nos um pouco sobre a sua empresa. </span>            
           </div>
           <div class="form-group">
             <div class="form-label-group tag-container">
-              {{ formulario.interesses(id="inputInteresses", placeholder="Quais temas/assuntos são do interesse de sua empresa?.") }}              
+              {{ formulario.interesses(id="inputInteresses") }}              
             </div>
+            <span class="help-block"> Gostariamos de saber seus interesses (Ex: Tecnologia). </span>                        
           </div>
           {{ formulario.tags_digitadas(id="inputTagsDigitadas") }}
           <div class="form-group">

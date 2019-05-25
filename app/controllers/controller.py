@@ -101,6 +101,8 @@ def buscar_categorias_id():
     qtd_interesses = len(interesses)
     interesses.pop(qtd_interesses - 1)
 
+    print(interesses)
+
     categorias = Categoria.query.all()
     list_categorias_id = []
     for categoria in categorias:
