@@ -1,7 +1,7 @@
 $(".btnComentarPostagem").click(function() {
     let lengthId    = this.id.length;
     let postagem_id = this.id[lengthId - 1];
-    let formularioComentario = $("#formComments" + postagem_id);
+    let formularioComentario = $("#comments" + postagem_id);
     
     if ((formularioComentario).is(':visible')) {
         formularioComentario.hide(500);

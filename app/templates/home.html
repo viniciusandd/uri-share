@@ -41,12 +41,24 @@
                             </div> -->
                             {% endif %}
                         </div>
-                        <div id="formComments{{ postagem.id }}" class="formComments">
-                            <form action="">
-                                <input type="text">
-                                <input type="submit" value="Comentar">
-                            </form>
-                        </div>               
+                        <div id="comments{{ postagem.id }}" class="comments">
+                            <div class="formComments">
+                                <form action="">
+                                    <input type="text">
+                                    <input type="submit" value="Comentar">
+                                </form>
+                            </div>
+                            <div class="all-comments">
+                                <div class="list-group">
+                                    <button type="button" class="list-group-item list-group-item-action">
+                                        Cras justo odio
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action">
+                                        Cras justo odio
+                                    </button>                                    
+                                </div>
+                            </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
