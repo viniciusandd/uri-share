@@ -15,38 +15,50 @@
       <div class="col-md-12 col-sm-* col-xs-*">
 
         <!-- Div to center the header image/name/social buttons -->
-        <div class="text-center">
 
+        <div class="text-center">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="600" height="200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img">               
+                <rect width="100%" height="100%" fill="#eee"></rect>
+                <image xlink:href="../../static/assets/logos/{{ perfil.logo }}" height="100%" width="100%">
+            </svg>
+
+            <br><br>
+
+            <div class="card">
+                <div class="card-bpdy">
+                    <h2>{{ perfil.razao_social }}</h2>
+                    <hr class="my-3">
+                    <button type="button" class="btn btn-outline-secondary">
+                        Postagens: <br> 15
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">
+                        Comentários: <br> 8
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">
+                        Avaliações: <br> 50
+                    </button>
+
+                </div>
+            </div>
+            
             <p>
-                <img src="../../static/assets/logos/{{ perfil.logo }}" class="rounded" height="100">                 
-            </p>
+                <div class="card">
+                    <div class="card-body">
+                        <h5><span class="badge badge-secondary">Sobre nós: </span></h5>
+                        <p> {{ perfil.sobre }} </p>
+                    </div>
+                </div>                                
+            </p>                      
 
             <p>
                 <div class="card">
                     <div class="card-body">
-                        <h4>{{ perfil.razao_social }}</h4>
-                        <h6>{{ perfil.nome_fantasia }}</h6>
+                        <h5><span class="badge badge-secondary">Onde nos encontrar: </span></h5>
+                        {{perfil.logradouro}}, {{perfil.complemento}}, {{perfil.numero}}, {{perfil.bairro}} - {{perfil.cep}} <br>
+                        {{perfil.cidade.nome}}, {{ perfil.cidade.estado.nome }}, {{ perfil.cidade.estado.pais.nome }}
                     </div>
-                </div>                
+                </div>                                
             </p>
-
-            <p>
-                <div class="jumbotron">
-                    <div class="container">
-                        {{ perfil.sobre }}
-                    </div>
-                </div>
-            </p>
-
-            <p>
-                <div class="jumbotron">
-                    <div class="container">
-                        {{perfil.logradouro}} - {{perfil.numero}} - {{perfil.complemento}}, {{perfil.bairro}} <br>
-                        {{perfil.cidade.nome}}
-                    </div>
-                </div>            
-            </p>
-
         </div>        
 
       </div> <!-- End column 2 -->
