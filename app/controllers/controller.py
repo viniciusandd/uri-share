@@ -100,16 +100,9 @@ def logout():
 
 @app.route("/home")
 def home():    
-    # if not current_user.is_authenticated:
-        # flash("Login não efetuado.")
-        # return redirect('login') 
-
     categorias_id = buscar_categorias_id()
     postagens     = buscar_postagens(categorias_id)
     
-    for postagem in postagens:
-        print("ID: %s | Cont: %s" % (postagem.id, postagem.conteudo))
-
     return render_template('home.html', postagens=postagens)
 
 def buscar_categorias_id():
@@ -117,8 +110,6 @@ def buscar_categorias_id():
     interesses     = interesses.split(",")
     qtd_interesses = len(interesses)
     interesses.pop(qtd_interesses - 1)
-
-    print(interesses)
 
     categorias = Categoria.query.all()
     list_categorias_id = []
@@ -177,6 +168,14 @@ def nova_postagem():
 def buscar():
     if request.method == 'POST':
         parametro = request.values.get("parametro")
+        
+        arroba = parametro.find('@')
+        if arroba > -1:
+            parametro = parametro[arroba+1:]
+            print(parametro)
+            perfis = Perfil.query.filter_by(nome_fantasia=parametro).all()    
+            return render_template('buscas.html', perfis=perfis, postagens=None)
+
         perfis    = Perfil.query.filter(Perfil.razao_social.like("%"+ parametro +"%")).all()
         postagens = Postagem.query.filter(Postagem.titulo.like("%"+ parametro +"%")).all()
 
@@ -185,7 +184,7 @@ def buscar():
             for perfil in perfis:
                 perfis_id.append(perfil.id)
 
-            postagens = db.session.query(Postagem).filter(Postagem.perfil_id.in_(tuple(perfis_id))).order_by(Postagem.data.desc(), Postagem.hora.desc()).all()            
+            postagens = db.session.query(Postagem).filter(Postagem.perfil_id.in_(tuple(perfis_id))).order_by(Postagem.data.desc(), Postagem.hora.desc()).limit(5).all()
 
         return render_template('buscas.html', perfis=perfis, postagens=postagens)
 

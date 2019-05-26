@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block conteudo %}
-{% if perfis %}
-  <h3><span class="badge badge-secondary">Perfis</span></h3>
+
+<h3><span class="badge badge-secondary">Perfis</span></h3>
+{% if perfis %}  
   <div class="row">
     {% for perfil in perfis %}
       <div class="col-6 col-md-4" style="padding:15px;">
@@ -21,14 +22,12 @@
       </div>
     {% endfor %}
   </div>
-{% else %}
-  <h3><span class="badge badge-secondary">Nenhum perfil foi encontrado.</span></h3>
 {% endif %}
 
 <br>
 
-{% if postagens %}
-  <h3><span class="badge badge-secondary">Postagens</span></h3>
+<h3><span class="badge badge-secondary">Postagens</span></h3>
+{% if postagens %}  
   {% for postagem in postagens %}    
     <div class="list-group">
       <a href="{{url_for('perfil', id=postagem.perfil_id)}}" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -41,7 +40,5 @@
       </a>
     </div>  
   {% endfor %}
-{% else %}
-<h3><span class="badge badge-secondary">Nenhuma postagem foi encontrada.</span></h3>
 {% endif %}
 {% endblock %}

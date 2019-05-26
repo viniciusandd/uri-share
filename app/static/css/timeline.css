@@ -70,3 +70,15 @@ p {
 .postagem-informacoes .categoria {
   float: right;
 }
+
+.timeline .timeline-body .timeline-item .content .formComments {
+  display: none;
+}
+
+.timeline .timeline-body .timeline-item .content .actions i {
+  color: #fff;
+}
+
+.timeline .timeline-body .timeline-item .content .postagem-autor {
+  font-size: 20px;
+}

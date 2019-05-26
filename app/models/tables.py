@@ -127,9 +127,7 @@ class Postagem(db.Model):
 
     def formatar_data(self):
         data = str(self.data)
-        print(data)
         array_data = data.split("-")
-        print(array_data) 
         data = datetime.datetime(int(array_data[0]), int(array_data[1]), int(array_data[2]))
         
         return data.strftime("%b %d")

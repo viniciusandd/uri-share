@@ -13,19 +13,21 @@
                     <p class="time">{{ postagem.formatar_data() }}</p>
                     <div class="content">
                         <div class="postagem-informacoes">
-                            <h5><a href="{{ url_for('perfil', id=postagem.perfil_id) }}">@{{ postagem.perfil.nome_fantasia }} </a></h5>
+                            <img src="../../static/assets/logos/{{ postagem.perfil.logo }}" 
+                            class="img-rounded" width="80" height="40"> 
+                            <a class="postagem-autor" href="{{ url_for('perfil', id=postagem.perfil_id) }}">@{{ postagem.perfil.nome_fantasia }} </a>
                             <div class="categoria">
                                 {{ postagem.categoria.descricao }}
                             </div>                            
                         </div> <br>
-                        <h2 class="title">{{ postagem.titulo }}</h2>
+                        <h3 class="title">{{ postagem.titulo }}</h3>
                         <p>{{ postagem.conteudo }}</p>
                         <div class="actions">
-                            <button class="btn"><i class="fas fa-fw fa-comment-dots"></i></button>
+                            <button id="#btnComentarPostagem{{ postagem.id }}" class="btn btnComentarPostagem"><i class="fas fa-fw fa-comment-dots"></i></button>
                             {% if postagem.perfil_id == current_user.id %}
-                            <button class="btn"><i class="fas fa-fw fa-trash-alt"></i></button>                            
+                            <button class="btn btnExcluirPostagem"><i class="fas fa-fw fa-trash-alt"></i></button>                            
                             {% else %}
-                            <div class="rate">
+                            <!-- <div class="rate">
                                 <input type="radio" id="star5" name="rate" value="5">
                                 <label for="star5" title="text">5 stars</label>
                                 <input type="radio" id="star4" name="rate" value="4">
@@ -36,9 +38,15 @@
                                 <label for="star2" title="text">2 stars</label>
                                 <input type="radio" id="star1" name="rate" value="1">
                                 <label for="star1" title="text">1 star</label>
-                            </div>
+                            </div> -->
                             {% endif %}
-                        </div>                        
+                        </div>
+                        <div id="formComments{{ postagem.id }}" class="formComments">
+                            <form action="">
+                                <input type="text">
+                                <input type="submit" value="Comentar">
+                            </form>
+                        </div>               
                     </div>
                 </div>
             </div>
