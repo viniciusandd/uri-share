@@ -81,10 +81,15 @@ p {
 
 .timeline .timeline-body .timeline-item .content .comments {
   display: none;
+  margin-top: 10px;
 }
 
 .timeline .timeline-body .timeline-item .content .all-comments button {
   padding: 7px;
   margin-top: 5px;
   font-size: 12px;
+}
+
+.timeline .timeline-body .timeline-item .content .all-comments .list-group {  
+  margin-top: 10px;  
 }
