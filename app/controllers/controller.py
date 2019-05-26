@@ -1,6 +1,7 @@
 import os
 
 from flask import render_template, flash, redirect, url_for, request
+from sqlalchemy import or_
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 from werkzeug.utils import secure_filename
@@ -132,7 +133,7 @@ def buscar_categorias_id():
     return tuple_categorias_id
 
 def buscar_postagens(categorias_id):
-    postagens = db.session.query(Postagem).filter(Postagem.categoria_id.in_(categorias_id)).order_by(Postagem.data.desc(), Postagem.hora.desc()).all()
+    postagens = db.session.query(Postagem).filter(or_(Postagem.perfil_id == current_user.id, Postagem.categoria_id.in_(categorias_id))).order_by(Postagem.data.desc(), Postagem.hora.desc()).all()
     return postagens
 
 @app.route("/perfil")
@@ -174,14 +175,18 @@ def nova_postagem():
 
 @app.route("/buscar", methods=['POST'])
 def buscar():
-    request.method
     if request.method == 'POST':
         parametro = request.values.get("parametro")
-        print(parametro)
-        perfis = Perfil.query.filter(Perfil.razao_social.like("%"+ parametro +"%")).all()
-        print(perfis)
+        perfis    = Perfil.query.filter(Perfil.razao_social.like("%"+ parametro +"%")).all()
         postagens = Postagem.query.filter(Postagem.titulo.like("%"+ parametro +"%")).all()
-        print(postagens)    
+
+        if not postagens:
+            perfis_id = []       
+            for perfil in perfis:
+                perfis_id.append(perfil.id)
+
+            postagens = db.session.query(Postagem).filter(Postagem.perfil_id.in_(tuple(perfis_id))).order_by(Postagem.data.desc(), Postagem.hora.desc()).all()            
+
         return render_template('buscas.html', perfis=perfis, postagens=postagens)
 
 @app.route("/ranking")

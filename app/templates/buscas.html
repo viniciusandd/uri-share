@@ -31,9 +31,9 @@
   <h3><span class="badge badge-secondary">Postagens</span></h3>
   {% for postagem in postagens %}    
     <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+      <a href="{{url_for('perfil', id=postagem.perfil_id)}}" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ postagem.titulo }}</h5>
+          <h5 class="mb-1">{{ postagem.titulo }} - @{{postagem.perfil.nome_fantasia}}</h5>
           <small>{{ postagem.formatar_data() }}</small>
         </div>
         <p class="mb-1">{{ postagem.conteudo }}</p>

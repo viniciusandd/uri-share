@@ -13,7 +13,7 @@
                     <p class="time">{{ postagem.formatar_data() }}</p>
                     <div class="content">
                         <div class="postagem-informacoes">
-                            {{ postagem.perfil.razao_social }} - {{ postagem.perfil.nome_fantasia }} 
+                            <h5><a href="{{ url_for('perfil', id=postagem.perfil_id) }}">@{{ postagem.perfil.nome_fantasia }} </a></h5>
                             <div class="categoria">
                                 {{ postagem.categoria.descricao }}
                             </div>                            

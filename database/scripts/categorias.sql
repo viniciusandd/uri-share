@@ -13,11 +13,11 @@ INSERT INTO categorias (id,descricao) VALUES (
 INSERT INTO categorias (id,descricao) VALUES (
 7,'Comércio');
 INSERT INTO categorias (id,descricao) VALUES (
-8,'Construção Civil');
+8,'Construção');
 INSERT INTO categorias (id,descricao) VALUES (
-9,'Arquitetura e Urbanismo');
+9,'Arquitetura');
 INSERT INTO categorias (id,descricao) VALUES (
-10,'Publicidade e Propaganda');
+10,'Publicidade');
 INSERT INTO categorias (id,descricao) VALUES (
 11,'Marketing');
 INSERT INTO categorias (id,descricao) VALUES (
