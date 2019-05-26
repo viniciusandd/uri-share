@@ -84,6 +84,7 @@ p {
 }
 
 .timeline .timeline-body .timeline-item .content .all-comments button {
+  padding: 7px;
   margin-top: 5px;
   font-size: 12px;
 }

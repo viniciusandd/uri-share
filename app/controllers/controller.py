@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 from werkzeug.utils import secure_filename
 
-from app.models.tables import Perfil, Cidade, Postagem, Categoria
+from app.models.tables import *
 from app.models.forms import LoginForm, PerfilForm, PostagemForm
 
 @login_manager.user_loader
@@ -102,8 +102,12 @@ def logout():
 def home():    
     categorias_id = buscar_categorias_id()
     postagens     = buscar_postagens(categorias_id)
-    
-    return render_template('home.html', postagens=postagens)
+    postagens_id  = buscar_postagens_id(postagens)
+    print(postagens_id)
+    comentarios   = buscar_comentarios(postagens_id)    
+    print(comentarios)        
+
+    return render_template('home.html', postagens=postagens, comentarios=comentarios)
 
 def buscar_categorias_id():
     interesses     = current_user.interesses
@@ -120,15 +124,30 @@ def buscar_categorias_id():
                 break
 
     tuple_categorias_id = tuple(list_categorias_id)
-
     return tuple_categorias_id
 
 def buscar_postagens(categorias_id):
     postagens = db.session.query(Postagem).filter(or_(Postagem.perfil_id == current_user.id, Postagem.categoria_id.in_(categorias_id))).order_by(Postagem.data.desc(), Postagem.hora.desc()).all()
     return postagens
 
-def buscar_comentarios():
-    pass
+def buscar_postagens_id(postagens):
+    list_postagens_id = []
+    for postagem in postagens:
+        list_postagens_id.append(postagem.id)
+    
+    tuple_postagens_id = tuple(list_postagens_id)
+    return tuple_postagens_id
+
+def buscar_comentarios(postagens_id):
+    # comentarios = db.session.query(Comentario).filter(Comentario.postagem_id.in_(postagens_id)).order_by(Comentario.data.desc(), Comentario.hora.desc(), Comentario.postagem_id).all()
+    # return comentarios
+
+    comentarios = {}
+    for id in postagens_id:
+        comentarios_por_id = Comentario.query.filter_by(postagem_id=id).all()
+        comentarios[id] = comentarios_por_id
+
+    return comentarios        
 
 @app.route("/perfil")
 @app.route("/perfil/<int:id>")
