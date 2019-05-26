@@ -127,6 +127,9 @@ def buscar_postagens(categorias_id):
     postagens = db.session.query(Postagem).filter(or_(Postagem.perfil_id == current_user.id, Postagem.categoria_id.in_(categorias_id))).order_by(Postagem.data.desc(), Postagem.hora.desc()).all()
     return postagens
 
+def buscar_comentarios():
+    pass
+
 @app.route("/perfil")
 @app.route("/perfil/<int:id>")
 def perfil(id=None):    

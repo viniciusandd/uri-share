@@ -92,17 +92,8 @@ class Categoria(db.Model):
     id        = db.Column(db.Integer, primary_key=True)
     descricao = db.Column(db.String, unique=True, nullable=False)
 
-class Interesse(db.Model):
-    __tablename__ = "interesses"
-    id            = db.Column(db.Integer, primary_key=True)
-    perfil_id     = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
-    categoria_id  = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
-    perfil        = db.relationship('Perfil', foreign_keys=perfil_id)
-    categoria     = db.relationship('Categoria', foreign_keys=categoria_id)
-
-    def __init__(self, perfil_id, categoria_id):
-        self.perfil_id    = perfil_id
-        self.categoria_id = categoria_id
+    def __repr__(self):
+        return "<Categoria %r>" % self.descricao    
 
 class Postagem(db.Model):
     __tablename__   = "postagens"
@@ -142,16 +133,16 @@ class Avaliacao(db.Model):
     nota        = db.Column(db.Integer, nullable=False)
     postagem    = db.relationship('Postagem', foreign_keys=postagem_id)
 
-# class Comentario(db.Model):
-#     __tablename__ = "comentarios"
-#     id          = db.Column(db.Integer, primary_key=True)
-#     perfil_id   = db.Column(db.Integer)
-#     postagem_id = db.Column(db.Integer)
-#     conteudo    = db.Column(db.String)
-#     data        = db.Column(db.Date)
-#     hora        = db.Column(db.Time)
-#     perfil      = db.relationship('Perfil', foreign_keys=perfil_id)
-#     postagem    = db.relationship('Postagem', foreign_keys=postagem_id)
+class Comentario(db.Model):
+    __tablename__ = "comentarios"
+    id          = db.Column(db.Integer, primary_key=True)
+    perfil_id   = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
+    postagem_id = db.Column(db.Integer, db.ForeignKey('postagens.id'), nullable=False)
+    conteudo    = db.Column(db.String, nullable=False)
+    data        = db.Column(db.String, nullable=False)
+    hora        = db.Column(db.String, nullable=False)
+    perfil      = db.relationship('Perfil', foreign_keys=perfil_id)
+    postagem    = db.relationship('Postagem', foreign_keys=postagem_id)
 
-#     def __repr__(self):
-#         return "<Comentario %r>" % self.id
+    def __repr__(self):
+        return "<Comentario %r>" % self.id
