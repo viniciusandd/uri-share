@@ -1,6 +1,6 @@
 import os
 
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 from werkzeug.utils import secure_filename
@@ -143,11 +143,7 @@ def perfil(id=None):
     else:
         perfil = current_user
 
-    logotipo = ".../.../%s" % perfil.logo
-
-    print(logotipo)
-
-    return render_template('perfil.html', perfil=perfil, logotipo=logotipo)
+    return render_template('perfil.html', perfil=perfil)
 
 @app.route("/nova_postagem", methods=['GET', 'POST'])
 def nova_postagem():
@@ -176,9 +172,17 @@ def nova_postagem():
                
     return render_template('postagem.html', formulario=formulario)
 
-@app.route("/buscar/<parametro>")
+@app.route("/buscar", methods=['POST'])
 def buscar():
-    return render_template('buscas.html')
+    request.method
+    if request.method == 'POST':
+        parametro = request.values.get("parametro")
+        print(parametro)
+        perfis = Perfil.query.filter(Perfil.razao_social.like("%"+ parametro +"%")).all()
+        print(perfis)
+        postagens = Postagem.query.filter(Postagem.titulo.like("%"+ parametro +"%")).all()
+        print(postagens)    
+        return render_template('buscas.html', perfis=perfis, postagens=postagens)
 
 @app.route("/ranking")
 def ranking():

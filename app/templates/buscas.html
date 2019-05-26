@@ -5,40 +5,43 @@
 {% endblock %}
 
 {% block conteudo %}
-<h3><span class="badge badge-secondary">Perfis</span></h3>
-<ul class="list-group">
-  <li class="list-group-item">Animal Farm</li>
-  <li class="list-group-item disabled">In Search of Lost Time <small>(out of stock)</small></li>
-  <li class="list-group-item">Wuthering Heights</li>
-</ul>
+{% if perfis %}
+  <h3><span class="badge badge-secondary">Perfis</span></h3>
+  <div class="row">
+    {% for perfil in perfis %}
+      <div class="col-6 col-md-4" style="padding:15px;">
+        <div class="card" style="width: 18rem;">
+          <img src="../../static/assets/logos/{{ perfil.logo }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ perfil.nome_fantasia }}</h5>
+            <p class="card-text">{{ perfil.interesses }}</p>
+            <a href="{{ url_for('perfil', id=perfil.id) }}" class="btn btn-primary">Visitar perfil</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <h3><span class="badge badge-secondary">Nenhum perfil foi encontrado.</span></h3>
+{% endif %}
 
 <br>
 
-<h3><span class="badge badge-secondary">Postagens</span></h3>
-<div class="list-group">
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">List group item heading</h5>
-      <small>3 days ago</small>
-    </div>
-    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small>Donec id elit non mi porta.</small>
-  </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">List group item heading</h5>
-      <small class="text-muted">3 days ago</small>
-    </div>
-    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small class="text-muted">Donec id elit non mi porta.</small>
-  </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">List group item heading</h5>
-      <small class="text-muted">3 days ago</small>
-    </div>
-    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small class="text-muted">Donec id elit non mi porta.</small>
-  </a>
-</div>
+{% if postagens %}
+  <h3><span class="badge badge-secondary">Postagens</span></h3>
+  {% for postagem in postagens %}    
+    <div class="list-group">
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ postagem.titulo }}</h5>
+          <small>{{ postagem.formatar_data() }}</small>
+        </div>
+        <p class="mb-1">{{ postagem.conteudo }}</p>
+        <small>{{ postagem.categoria.descricao }}</small>
+      </a>
+    </div>  
+  {% endfor %}
+{% else %}
+<h3><span class="badge badge-secondary">Nenhuma postagem foi encontrada.</span></h3>
+{% endif %}
 {% endblock %}

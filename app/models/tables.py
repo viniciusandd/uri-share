@@ -135,7 +135,7 @@ class Postagem(db.Model):
         return data.strftime("%b %d")
 
     def __repr__(self):
-        return "<Postagem %r>" % self.id
+        return "<Postagem %r>" % self.titulo
 
 class Avaliacao(db.Model):
     __tablename__ = "avaliacoes"
