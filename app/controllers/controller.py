@@ -193,6 +193,24 @@ def nova_postagem():
                
     return render_template('postagem.html', formulario=formulario)
 
+@app.route("/novo_comentario", methods=['GET'])
+def novo_comentario():
+    perfil_id   = request.args.get('perfil_id', 0, type=int)
+    postagem_id = request.args.get('postagem_id', 0, type=int)
+    conteudo    = request.args.get('conteudo', 0, type=int)
+
+    print(perfil_id)
+    print(postagem_id)
+    print(conteudo)
+
+    comentario  = Comentario(
+        perfil_id, postagem_id, conteudo
+    )
+    db.session.add(comentario)
+    db.session.commit()
+
+    return jsonify("1")
+
 @app.route("/buscar", methods=['POST'])
 def buscar():
     if request.method == 'POST':

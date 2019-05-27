@@ -183,6 +183,11 @@
   <!-- Custom scripts for all pages-->
   <script src="{{ url_for('static', filename='js/sb-admin.min.js') }}"></script>
 
+  <!-- Não faço ideia pq caraleos usar isso -->
+  <script type=text/javascript>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+
   <script src="{{ url_for('static', filename='js/timeline.js') }}"></script>
 
 </body>

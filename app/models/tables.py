@@ -144,5 +144,12 @@ class Comentario(db.Model):
     perfil      = db.relationship('Perfil', foreign_keys=perfil_id)
     postagem    = db.relationship('Postagem', foreign_keys=postagem_id)
 
+    def __init__(self, perfil_id, postagem_id, conteudo):
+        self.perfil_id = perfil_id
+        self.postagem_id = postagem_id
+        self.conteudo = conteudo
+        self.data = Funcoes.retornar_data_atual()
+        self.hora = Funcoes.retornar_hora_atual()
+
     def __repr__(self):
         return "<Comentario %r>" % self.id

@@ -43,10 +43,12 @@
                         </div>
                         <div id="comments{{ postagem.id }}" class="comments">
                             <div class="formComments">
-                                <form action="">
-                                    <input type="text" placeholder="Escreva um comentário...">
-                                    <input class="btn btn-secondary btn-sm" type="submit" value="Comentar">
-                                </form>
+                                <input name="perfil_id" type="hidden" value="{{ postagem.perfil.id }}">
+                                <input name="postagem_id" type="hidden" value="{{ postagem.id }}">
+                                <input name="conteudo{{ postagem.id }}" type="text" placeholder="Escreva um comentário...">
+                                <button id="btnEnviarComentario{{ postagem.id }}" class="btn btn-secondary btn-sm btnEnviarComentario" type="submit">
+                                    Comentar
+                                </button>
                             </div>
                             <div class="all-comments">
                                 <div class="list-group">
