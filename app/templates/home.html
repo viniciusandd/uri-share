@@ -43,9 +43,9 @@
                         </div>
                         <div id="comments{{ postagem.id }}" class="comments">
                             <div class="formComments">
-                                <input name="perfil_id" type="hidden" value="{{ current_user.id }}">
-                                <input name="postagem_id" type="hidden" value="{{ postagem.id }}">
-                                <input name="conteudo{{ postagem.id }}" type="text" placeholder="Escreva um comentário...">
+                                <input id="perfil_id{{ postagem.id }}" name="perfil_id" type="hidden" value="{{ current_user.id }}">
+                                <input id="postagem_id{{ postagem.id }}" name="postagem_id" type="hidden" value="{{ postagem.id }}">
+                                <input id="conteudo{{ postagem.id }}" name="conteudo" type="text" placeholder="Escreva um comentário...">
                                 <button id="btnEnviarComentario{{ postagem.id }}" class="btn btn-secondary btn-sm btnEnviarComentario" type="submit">
                                     Comentar
                                 </button>
