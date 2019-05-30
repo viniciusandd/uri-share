@@ -51,7 +51,7 @@
                                 </button>
                             </div>
                             <div class="all-comments">
-                                <div class="list-group">
+                                <div id="list-group{{ postagem.id }}" class="list-group">
                                     {% for comentario in comentarios[postagem.id] %}
                                         <button type="button" class="list-group-item list-group-item-action">
                                             <a href="#">@{{ comentario.perfil.nome_fantasia }}</a> - {{ comentario.conteudo }}

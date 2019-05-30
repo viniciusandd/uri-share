@@ -209,7 +209,7 @@ def novo_comentario():
     db.session.add(comentario)
     db.session.commit()
 
-    return jsonify("1")
+    return jsonify({"perfil":current_user.nome_fantasia, "conteudo":conteudo})
 
 @app.route("/buscar", methods=['POST'])
 def buscar():
