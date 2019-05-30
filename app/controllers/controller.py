@@ -1,6 +1,6 @@
 import os
 
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from sqlalchemy import or_
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
@@ -144,7 +144,7 @@ def buscar_comentarios(postagens_id):
 
     comentarios = {}
     for id in postagens_id:
-        comentarios_por_id = Comentario.query.filter_by(postagem_id=id).all()
+        comentarios_por_id = Comentario.query.filter_by(postagem_id=id).order_by(Comentario.data.desc(), Comentario.hora.desc()).all()
         comentarios[id] = comentarios_por_id
 
     return comentarios        
@@ -197,7 +197,7 @@ def nova_postagem():
 def novo_comentario():
     perfil_id   = request.args.get('perfil_id', 0, type=int)
     postagem_id = request.args.get('postagem_id', 0, type=int)
-    conteudo    = request.args.get('conteudo', 0, type=int)
+    conteudo    = request.args.get('conteudo', '', type=str)
 
     print(perfil_id)
     print(postagem_id)

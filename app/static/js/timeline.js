@@ -11,6 +11,7 @@ $(".btnComentarPostagem").click(function() {
 });
 
 $('.btnEnviarComentario').click(function() {
+    console.log('clicou');
     let lengthId    = this.id.length;
     let postagem_id = this.id[lengthId - 1];    
     $.getJSON($SCRIPT_ROOT + '/novo_comentario', {
