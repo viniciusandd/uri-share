@@ -6,14 +6,14 @@
 
 {% block conteudo %}
     {% for postagem in postagens %}
-    <div class="row row-timeline">    
+    <div id="bloco-postagem{{ postagem.id }}" class="row row-timeline">    
         <div class="timeline">
             <div class="timeline-body">
                 <div class="timeline-item">
                     <p class="time">{{ postagem.formatar_data() }}</p>
                     <div class="content">
                         <div class="postagem-informacoes">
-                            <img src="../../static/assets/logos/{{ postagem.perfil.logo }}" 
+                            <img class="rounded-circle" src="../../static/assets/logos/{{ postagem.perfil.logo }}" 
                             class="img-rounded" width="80" height="40"> 
                             <a class="postagem-autor" href="{{ url_for('perfil', id=postagem.perfil_id) }}">@{{ postagem.perfil.nome_fantasia }} </a>
                             <div class="categoria">
@@ -23,9 +23,9 @@
                         <h3 class="title">{{ postagem.titulo }}</h3>
                         <p>{{ postagem.conteudo }}</p>
                         <div class="actions">
-                            <button id="#btnComentarPostagem{{ postagem.id }}" class="btn btnComentarPostagem"><i class="fas fa-fw fa-comment-dots"></i></button>
+                            <button id="btnComentarPostagem{{ postagem.id }}" class="btn btnComentarPostagem"><i class="fas fa-fw fa-comment-dots"></i></button>
                             {% if postagem.perfil_id == current_user.id %}
-                            <button class="btn btnExcluirPostagem"><i class="fas fa-fw fa-trash-alt"></i></button>                            
+                            <button id="btnExcluirPostagem{{ postagem.id }}" class="btn btnExcluirPostagem"><i class="fas fa-fw fa-trash-alt"></i></button>                            
                             {% else %}
                             <!-- <div class="rate">
                                 <input type="radio" id="star5" name="rate" value="5">

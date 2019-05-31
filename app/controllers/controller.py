@@ -193,6 +193,19 @@ def nova_postagem():
                
     return render_template('postagem.html', formulario=formulario)
 
+@app.route("/excluir_postagem", methods=['GET'])
+def excluir_postagem():
+    id = request.args.get('postagem_id', 0, type=int)
+    postagem = Postagem.query.filter_by(id=id).first()
+
+    if not postagem:
+        return jsonify({'retorno':'Falha ao localizar postagem.'})
+
+    db.session.delete(postagem)
+    db.session.commit()
+
+    return jsonify({'retorno':'Postagem deletada.'})    
+
 @app.route("/novo_comentario", methods=['GET'])
 def novo_comentario():
     perfil_id   = request.args.get('perfil_id', 0, type=int)
