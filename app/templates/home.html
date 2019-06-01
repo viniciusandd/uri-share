@@ -6,7 +6,7 @@
 
 {% block conteudo %}
     {% for postagem in postagens %}
-    <div id="bloco-postagem{{ postagem.id }}" class="row row-timeline">    
+    <div id="bloco_postagem{{ postagem.id }}" class="row row-timeline">    
         <div class="timeline">
             <div class="timeline-body">
                 <div class="timeline-item">
@@ -25,7 +25,7 @@
                         <div class="actions">
                             <button class="btn btnComentarPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-comment-dots"></i></button>
                             {% if postagem.perfil_id == current_user.id %}
-                            <button id="btnExcluirPostagem{{ postagem.id }}" class="btn btnExcluirPostagem"><i class="fas fa-fw fa-trash-alt"></i></button>                            
+                            <button class="btn btnExcluirPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-trash-alt"></i></button>                            
                             {% else %}
                             <!-- <div class="rate">
                                 <input type="radio" id="star5" name="rate" value="5">

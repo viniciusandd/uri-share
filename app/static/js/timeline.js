@@ -36,17 +36,23 @@ $('.btnEnviarComentario').click(function() {
 });
 
 $( ".btnExcluirPostagem" ).click(function() {
-    let lengthId    = this.id.length;
-    let postagem_id = this.id[lengthId - 1];
-    let blocoPostagem = $('#bloco-postagem'+postagem_id);
+    let postagem_id    = $(this).attr('postagem_id');
+    console.log(postagem_id);
+    let bloco_postagem = $('#bloco_postagem'+postagem_id);
     bootbox.confirm("Tem certeza que deseja excluir essa postagem?", function(result) { 
         if (result)  {
             $.getJSON($SCRIPT_ROOT + '/excluir_postagem', {
-                postagem_id : postagem_id        
+                postagem_id : postagem_id
             }, function(data) {
-                alert(data);
-                blocoPostagem.remove();
-            }); 
+                console.log(data.status);
+                if (data.status == 1) {
+                    bloco_postagem.remove();
+                } else {
+                    bootbox.alert(
+                        "Ocorreram falhas ao excluir sua postagem, tente novamente."
+                    );
+                }
+            });
         }
-    });   
+    });
 });
