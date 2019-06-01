@@ -129,9 +129,16 @@ class Postagem(db.Model):
 class Avaliacao(db.Model):
     __tablename__ = "avaliacoes"
     id          = db.Column(db.Integer, primary_key=True)
+    perfil_id   = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
     postagem_id = db.Column(db.Integer, db.ForeignKey('postagens.id'), nullable=False)
     nota        = db.Column(db.Integer, nullable=False)
+    perfil      = db.relationship('Perfil', foreign_keys=perfil_id)
     postagem    = db.relationship('Postagem', foreign_keys=postagem_id)
+
+    def __init__(self, perfil_id, postagem_id, nota):
+        self.perfil_id = perfil_id
+        self.postagem_id = postagem_id
+        self.nota = nota
 
 class Comentario(db.Model):
     __tablename__ = "comentarios"

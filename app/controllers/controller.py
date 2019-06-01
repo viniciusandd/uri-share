@@ -220,16 +220,11 @@ def excluir_postagem():
 
 @app.route("/novo_comentario", methods=['GET'])
 def novo_comentario():
-    perfil_id   = request.args.get('perfil_id', 0, type=int)
     postagem_id = request.args.get('postagem_id', 0, type=int)
     conteudo    = request.args.get('conteudo', '', type=str)
 
-    print(perfil_id)
-    print(postagem_id)
-    print(conteudo)
-
     comentario  = Comentario(
-        perfil_id, postagem_id, conteudo
+        current_user.id, postagem_id, conteudo
     )
     db.session.add(comentario)
 
@@ -249,6 +244,34 @@ def novo_comentario():
             "conteudo": conteudo
         }
     )
+
+@app.route("/nova_avaliacao", methods=['GET'])
+def nova_avaliacao():
+    postagem_id = request.args.get('postagem_id', 0, type=int)
+    nota        = request.args.get('nota', 0.0, type=float)
+
+    print(postagem_id)
+    print(nota)
+
+    avaliacao = Avaliacao(
+        current_user.id, postagem_id, nota
+    )
+
+    db.session.add(avaliacao)
+    try:
+        db.session.commit()
+    except Exception as e:
+        return jsonify(
+            {
+                "status":0
+            }
+        )
+
+    return jsonify(
+        {
+            "status": 1
+        }
+    )    
 
 @app.route("/buscar", methods=['POST'])
 def buscar():

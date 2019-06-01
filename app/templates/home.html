@@ -25,25 +25,13 @@
                         <div class="actions">
                             <button class="btn btnComentarPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-comment-dots"></i></button>
                             {% if postagem.perfil_id == current_user.id %}
-                            <button class="btn btnExcluirPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-trash-alt"></i></button>                            
+                            <button class="btn btnExcluirPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-trash-alt"></i></button>
                             {% else %}
-                            <!-- <div class="rate">
-                                <input type="radio" id="star5" name="rate" value="5">
-                                <label for="star5" title="text">5 stars</label>
-                                <input type="radio" id="star4" name="rate" value="4">
-                                <label for="star4" title="text">4 stars</label>
-                                <input type="radio" id="star3" name="rate" value="3">
-                                <label for="star3" title="text">3 stars</label>
-                                <input type="radio" id="star2" name="rate" value="2">
-                                <label for="star2" title="text">2 stars</label>
-                                <input type="radio" id="star1" name="rate" value="1">
-                                <label for="star1" title="text">1 star</label>
-                            </div> -->
+                            <button class="btn btnAvaliarPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-star"></i></button>
                             {% endif %}
                         </div>
                         <div id="comments{{ postagem.id }}" class="comments">
                             <div class="formComments">
-                                <input id="perfil_id{{ postagem.id }}" name="perfil_id" type="hidden" value="{{ current_user.id }}">
                                 <input id="postagem_id{{ postagem.id }}" name="postagem_id" type="hidden" value="{{ postagem.id }}">
                                 <input id="conteudo{{ postagem.id }}" name="conteudo" type="text" placeholder="Escreva um comentário...">
                                 <button postagem_id="{{ postagem.id }}" class="btn btn-secondary btn-sm btnEnviarComentario" type="submit">
