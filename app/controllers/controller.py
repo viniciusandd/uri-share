@@ -220,9 +220,23 @@ def novo_comentario():
         perfil_id, postagem_id, conteudo
     )
     db.session.add(comentario)
-    db.session.commit()
 
-    return jsonify({"perfil":current_user.nome_fantasia, "conteudo":conteudo})
+    try:
+        db.session.commit()
+    except Exception as e:
+        return jsonify(
+            {
+                "status":0
+            }
+        )
+
+    return jsonify(
+        {
+            "status": 1,
+            "perfil": current_user.nome_fantasia, 
+            "conteudo": conteudo
+        }
+    )
 
 @app.route("/buscar", methods=['POST'])
 def buscar():

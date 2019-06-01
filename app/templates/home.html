@@ -23,7 +23,7 @@
                         <h3 class="title">{{ postagem.titulo }}</h3>
                         <p>{{ postagem.conteudo }}</p>
                         <div class="actions">
-                            <button id="btnComentarPostagem{{ postagem.id }}" class="btn btnComentarPostagem"><i class="fas fa-fw fa-comment-dots"></i></button>
+                            <button class="btn btnComentarPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-comment-dots"></i></button>
                             {% if postagem.perfil_id == current_user.id %}
                             <button id="btnExcluirPostagem{{ postagem.id }}" class="btn btnExcluirPostagem"><i class="fas fa-fw fa-trash-alt"></i></button>                            
                             {% else %}
@@ -46,7 +46,7 @@
                                 <input id="perfil_id{{ postagem.id }}" name="perfil_id" type="hidden" value="{{ current_user.id }}">
                                 <input id="postagem_id{{ postagem.id }}" name="postagem_id" type="hidden" value="{{ postagem.id }}">
                                 <input id="conteudo{{ postagem.id }}" name="conteudo" type="text" placeholder="Escreva um comentário...">
-                                <button id="btnEnviarComentario{{ postagem.id }}" class="btn btn-secondary btn-sm btnEnviarComentario" type="submit">
+                                <button postagem_id="{{ postagem.id }}" class="btn btn-secondary btn-sm btnEnviarComentario" type="submit">
                                     Comentar
                                 </button>
                             </div>
