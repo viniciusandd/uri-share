@@ -116,12 +116,27 @@ class Postagem(db.Model):
         self.data         = Funcoes.retornar_data_atual()
         self.hora         = Funcoes.retornar_hora_atual()
 
-    def formatar_data(self):
+    def calcular_media(self):
+        avaliacoes = Avaliacao.query.filter_by(postagem_id=self.id).all()
+        qtd_avaliacoes = len(avaliacoes)
+        valor_total_avaliacoes = 0
+        for avaliacao in avaliacoes:
+            valor_total_avaliacoes = valor_total_avaliacoes + avaliacao.nota
+        media_avaliacoes = valor_total_avaliacoes / qtd_avaliacoes
+        return media_avaliacoes
+
+    def formatar_data(self, tipo):
+        # Tipos de formatação
+        # 1 - timeline (Jun 01)
+        # 2 - brasileiro (01/06/2019)
+                        
         data = str(self.data)
         array_data = data.split("-")
         data = datetime.datetime(int(array_data[0]), int(array_data[1]), int(array_data[2]))
-        
-        return data.strftime("%b %d")
+        if tipo == 'timeline':            
+            return data.strftime("%b %d")
+        if tipo == 'brasileiro':
+            return data.strftime('%d/%m/%Y')
 
     def __repr__(self):
         return "<Postagem %r>" % self.titulo

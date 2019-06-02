@@ -221,7 +221,7 @@ def excluir_postagem():
 @app.route("/novo_comentario", methods=['GET'])
 def novo_comentario():
     postagem_id = request.args.get('postagem_id', 0, type=int)
-    conteudo    = request.args.get('conteudo', '', type=str)
+    conteudo = request.args.get('conteudo', '', type=str)
 
     comentario  = Comentario(
         current_user.id, postagem_id, conteudo
@@ -231,11 +231,7 @@ def novo_comentario():
     try:
         db.session.commit()
     except Exception as e:
-        return jsonify(
-            {
-                "status":0
-            }
-        )
+        return jsonify({"status":0})
 
     return jsonify(
         {
@@ -248,30 +244,26 @@ def novo_comentario():
 @app.route("/nova_avaliacao", methods=['GET'])
 def nova_avaliacao():
     postagem_id = request.args.get('postagem_id', 0, type=int)
-    nota        = request.args.get('nota', 0.0, type=float)
+    nota = request.args.get('nota', 0.0, type=float)
 
-    print(postagem_id)
-    print(nota)
-
-    avaliacao = Avaliacao(
-        current_user.id, postagem_id, nota
-    )
+    avaliacao = Avaliacao.query.filter_by(perfil_id=current_user.id,postagem_id=postagem_id).first()
+    if not avaliacao:
+        avaliacao = Avaliacao(current_user.id, postagem_id, nota)
+    else:
+        avaliacao.nota = nota
 
     db.session.add(avaliacao)
-    try:
-        db.session.commit()
-    except Exception as e:
-        return jsonify(
-            {
-                "status":0
-            }
-        )
+    db.session.commit()
+    atualizar_media_avaliacao_postagem(postagem_id)
 
-    return jsonify(
-        {
-            "status": 1
-        }
-    )    
+    return jsonify({"status":1})
+
+def atualizar_media_avaliacao_postagem(postagem_id):
+    postagem = Postagem.query.filter_by(id=postagem_id).first()
+    media_avaliacoes = postagem.calcular_media()        
+    postagem.media_avaliacao = media_avaliacoes
+    db.session.add(postagem)
+    db.session.commit()
 
 @app.route("/buscar", methods=['POST'])
 def buscar():
@@ -285,7 +277,7 @@ def buscar():
             perfis = Perfil.query.filter_by(nome_fantasia=parametro).all()    
             return render_template('buscas.html', perfis=perfis, postagens=None)
 
-        perfis    = Perfil.query.filter(Perfil.razao_social.like("%"+ parametro +"%")).all()
+        perfis = Perfil.query.filter(Perfil.razao_social.like("%"+ parametro +"%")).all()
         postagens = Postagem.query.filter(Postagem.titulo.like("%"+ parametro +"%")).all()
 
         if not postagens:
@@ -299,4 +291,7 @@ def buscar():
 
 @app.route("/ranking")
 def ranking():
-    return render_template('ranking.html')
+    cont = 1
+    postagens = Postagem.query.limit(20).all()    
+    return render_template('ranking.html', cont=cont, postagens=postagens)
+

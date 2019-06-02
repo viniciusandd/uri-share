@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/timeline.css') }}">
   <!-- Estilos da avalição de postagens -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/rate.css') }}">
+  <!-- Estilos da tela de ranking (podium) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/podium.css') }}">
 
 </head>
 
@@ -182,16 +184,17 @@
   <!-- Custom scripts for all pages-->
   <script src="{{ url_for('static', filename='js/sb-admin.min.js') }}"></script>
 
-  <!-- Não faço ideia pq caraleos usar isso -->
+  <!-- Essa variável antecerá as chamadas ajax no js -->
   <script type=text/javascript>
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
   </script>
 
-  <script src="{{ url_for('static', filename='js/timeline.js') }}"></script>
-
   <!-- BootBox (caixas de diálogo customizadas) -->
   <script src="{{ url_for('static', filename='js/bootbox/bootbox.min.js') }}"></script>     
 
+  <!-- Js específico por views -->
+  <script src="{{ url_for('static', filename='js/timeline.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/ranking.js') }}"></script>
 </body>
 
 </html>
