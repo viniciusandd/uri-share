@@ -7,6 +7,7 @@ from app import app, db, login_manager
 from werkzeug.utils import secure_filename
 
 from app.models.tables import *
+from app.models.ranking import Ranking
 from app.models.forms import LoginForm, PerfilForm, PostagemForm
 
 @login_manager.user_loader
@@ -291,7 +292,8 @@ def buscar():
 
 @app.route("/ranking")
 def ranking():
-    cont = 1
-    postagens = Postagem.query.limit(20).all()    
-    return render_template('ranking.html', cont=cont, postagens=postagens)
+    postagens = Postagem.query.order_by(Postagem.media_avaliacao.desc()).limit(20).all()
+    ranking   = Ranking(postagens)
+    podium    = ranking.montar_podium()
+    return render_template('ranking.html', postagens=postagens, podium=podium)
 

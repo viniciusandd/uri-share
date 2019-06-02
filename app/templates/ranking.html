@@ -5,64 +5,64 @@
 {% endblock %}
 
 {% block conteudo %}
-
 <div class="row">
-    <table class="table">
-        <thead>
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Perfil</th>
+          <th scope="col">Título</th>
+          <th scope="col">Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for postagem in postagens %}
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Perfil</th>
-            <th scope="col">Título</th>
-            <th scope="col">Data</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for postagem in postagens %}
-            <tr>
-              {% if loop.index == 1 %}
-              <th scope="row">#{{ loop.index }} <i class="fas fa-trophy"></i></th>
-              {% elif loop.index == 2 %}
-              <th scope="row">#{{ loop.index }} <i class="fas fa-award"></i></th>
-              {% elif loop.index == 3 %}
-              <th scope="row">#{{ loop.index }} <i class="fas fa-medal"></i></th>
-              {% else %}
-              <th scope="row">#{{ loop.index }} </th>
-              {% endif %}
-      
-              <td>{{ postagem.perfil.nome_fantasia }}</td>
-              <td>{{ postagem.titulo }}</td>
-              <td>{{ postagem.formatar_data("brasileiro") }}</td>
-            </tr> 
-          {% endfor %}
-        </tbody>
-    </table>    
+            {% if loop.index == 1 %}
+            <th scope="row">#{{ loop.index }} <i class="fas fa-trophy"></i></th>
+            {% elif loop.index == 2 %}
+            <th scope="row">#{{ loop.index }} <i class="fas fa-award"></i></th>
+            {% elif loop.index == 3 %}
+            <th scope="row">#{{ loop.index }} <i class="fas fa-medal"></i></th>
+            {% else %}
+            <th scope="row">#{{ loop.index }} </th>
+            {% endif %}
+    
+            <td>{{ postagem.perfil.nome_fantasia }}</td>
+            <td>{{ postagem.titulo }}</td>
+            <td>{{ postagem.formatar_data("brasileiro") }}</td>
+          </tr> 
+        {% endfor %}
+      </tbody>
+  </table>    
 </div>
 
+{% if podium|length >= 3 %}
 <div id="podium-box" class="row" style="height: 300px">
-    <div class="col-md-4 step-container m-0 p-0">
-      <div>
-        Text 2
-      </div>
-      <div id="second-step" class="bg-grey step centerBoth podium-number">
-        2
-      </div>
+  <div class="col-md-4 step-container m-0 p-0">
+    <div>
+      {{ podium[1].perfil.nome_fantasia }} - {{ podium[1].titulo }}
     </div>
-    <div class="col-md-4 step-container m-0 p-0">
-      <div>
-        Text 1
-      </div>
-      <div id="first-step" class="bg-grey step centerBoth podium-number">
-        1
-      </div>
-    </div>
-    <div class="col-md-4 step-container m-0 p-0">
-      <div>
-        Text 3
-      </div>
-      <div id="third-step" class="bg-grey step centerBoth podium-number">
-        3
-      </div>
+    <div id="second-step" class="bg-grey step centerBoth podium-number">
+      #2
     </div>
   </div>
-
+  <div class="col-md-4 step-container m-0 p-0">
+    <div>
+      {{ podium[0].perfil.nome_fantasia }} - {{ podium[0].titulo }}
+    </div>
+    <div id="first-step" class="bg-grey step centerBoth podium-number">
+      #1
+    </div>
+  </div>
+  <div class="col-md-4 step-container m-0 p-0">
+    <div>
+      {{ podium[2].perfil.nome_fantasia }} - {{ podium[2].titulo }}
+    </div>
+    <div id="third-step" class="bg-grey step centerBoth podium-number">
+      #3
+    </div>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
