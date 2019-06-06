@@ -158,14 +158,12 @@ def perfil(id=None):
     else:
         perfil = current_user
 
-    postagens       = Postagem.query.filter_by(perfil_id=perfil.id).all()    
-    comentarios     = Comentario.query.filter_by(perfil_id=perfil.id).all()
-    qtd_postagens   = len(postagens)
-    qtd_comentarios = len(comentarios)
+    postagens   = Postagem.query.filter_by(perfil_id=perfil.id).all()    
+    comentarios = Comentario.query.filter_by(perfil_id=perfil.id).all()    
 
     return render_template(
-        'perfil.html', perfil=perfil, qtd_postagens=qtd_postagens, qtd_comentarios=qtd_comentarios
-        )
+        'perfil.html', perfil=perfil, postagens=postagens, comentarios=comentarios
+    )
 
 @app.route("/nova_postagem", methods=['GET', 'POST'])
 def nova_postagem():
