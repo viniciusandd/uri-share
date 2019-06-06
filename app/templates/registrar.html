@@ -1,164 +1,129 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'externo.html' %}
 
-<head>
+{% block titulo %}
+  {{ super() }} - Registrar
+{% endblock %}
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+{% block conteudo %}
 
-  <title>SB Admin - Register</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-
-  <!-- Custom styles for this template-->
-  <link href="{{ url_for('static', filename='css/sb-admin.css') }}" rel="stylesheet">
-
-  <!-- CSS externo -->
-  <link href="{{ url_for('static', filename='css/tags.css') }}" rel="stylesheet">
-
-</head>
-
-<body class="bg-dark">
-
-  <div class="container">
-    <div class="card card-register mx-auto mt-5">
-      <div class="card-header">Registre uma conta</div>
-      <div class="card-body">
-        <form action="" method="POST" enctype="multipart/form-data">
+<div class="card card-register mx-auto mt-5">
+    <div class="card-header">Registre uma conta</div>
+    <div class="card-body">
+       <form action="" method="POST" enctype="multipart/form-data">
           {{ formulario.csrf_token }}
           {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              <div class="alert alert-warning" role="alert">
-                <ul class=flashes>
+          {% if messages %}
+          <div class="alert alert-warning" role="alert">
+             <ul class=flashes>
                 {% for message in messages %}
-                  <li>{{ message }}</li>
+                <li>{{ message }}</li>
                 {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
+             </ul>
+          </div>
+          {% endif %}
           {% endwith %}
           <div class="form-group">
-            <div class="form-label-group">
-              {{ formulario.razao_social(id="inputRazaoSocial", class="form-control", placeholder="Razão social", required="required") }}
-              <label for="inputRazaoSocial">Razão social</label>
-            </div>
+             <div class="form-label-group">
+                {{ formulario.razao_social(id="inputRazaoSocial", class="form-control", placeholder="Razão social", required="required") }}
+                <label for="inputRazaoSocial">Razão social</label>
+             </div>
           </div>
           <div class="form-group">
-            <div class="form-label-group">
-              {{ formulario.nome_fantasia(id="inputNomeFantasia", class="form-control", placeholder="Nome fantasia", required="required") }}
-              <label for="inputNomeFantasia">Nome fantasia</label>
-            </div>
+             <div class="form-label-group">
+                {{ formulario.nome_fantasia(id="inputNomeFantasia", class="form-control", placeholder="Nome fantasia", required="required") }}
+                <label for="inputNomeFantasia">Nome fantasia</label>
+             </div>
           </div>
           <div class="form-group">
-            <div class="form-label-group">
-              {{ formulario.cnpj(id="inputCnpj", class="form-control", placeholder="CNPJ", required="required") }}
-              <label for="inputCnpj">CNPJ</label>
-            </div>
+             <div class="form-label-group">
+                {{ formulario.cnpj(id="inputCnpj", class="form-control", placeholder="CNPJ", required="required") }}
+                <label for="inputCnpj">CNPJ</label>
+             </div>
           </div>
           <div class="form-group">
-            <div class="form-label-group">
-              {{ formulario.logradouro(id="inputLogradouro", class="form-control", placeholder="Logradouro", required="required") }}
-              <label for="inputLogradouro">Logradouro</label>
-            </div>
+             <div class="form-label-group">
+                {{ formulario.logradouro(id="inputLogradouro", class="form-control", placeholder="Logradouro", required="required") }}
+                <label for="inputLogradouro">Logradouro</label>
+             </div>
           </div>
           <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <div class="form-label-group">
-                  {{ formulario.complemento(id="inputComplemento", class="form-control", placeholder="Complemento") }}
-                  <label for="inputComplemento">Complemento</label>
+             <div class="form-row">
+                <div class="col-md-6">
+                   <div class="form-label-group">
+                      {{ formulario.complemento(id="inputComplemento", class="form-control", placeholder="Complemento") }}
+                      <label for="inputComplemento">Complemento</label>
+                   </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-label-group">
-                  {{ formulario.numero(id="inputNumero", class="form-control", placeholder="Número", required="required") }}
-                  <label for="inputNumero">Número</label>
+                <div class="col-md-6">
+                   <div class="form-label-group">
+                      {{ formulario.numero(id="inputNumero", class="form-control", placeholder="Número", required="required") }}
+                      <label for="inputNumero">Número</label>
+                   </div>
                 </div>
-              </div>
-            </div>
+             </div>
           </div>
           <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <div class="form-label-group">
-                  {{ formulario.bairro(id="inputBairro", class="form-control", placeholder="Bairro", required="required") }}
-                  <label for="inputBairro">Bairro</label>
+             <div class="form-row">
+                <div class="col-md-6">
+                   <div class="form-label-group">
+                      {{ formulario.bairro(id="inputBairro", class="form-control", placeholder="Bairro", required="required") }}
+                      <label for="inputBairro">Bairro</label>
+                   </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-label-group">
-                  {{ formulario.cep(id="inputCep", class="form-control", placeholder="CEP", required="required") }}
-                  <label for="inputCep">CEP</label>
+                <div class="col-md-6">
+                   <div class="form-label-group">
+                      {{ formulario.cep(id="inputCep", class="form-control", placeholder="CEP", required="required") }}
+                      <label for="inputCep">CEP</label>
+                   </div>
                 </div>
-              </div>
-            </div>
+             </div>
           </div>
           <div class="form-group">
-            <div class="form-label-group">
-              {{ formulario.cidade_id(id="selectCidadeId", class="form-control", placeholder="Selecione sua cidade.", required="required") }}
-            </div>
+             <div class="form-label-group">
+                {{ formulario.cidade_id(id="selectCidadeId", class="form-control", placeholder="Selecione sua cidade.", required="required") }}
+             </div>
           </div>
           <div class="form-group">
-            <div class="form-label-group">
-              {{ formulario.logo(id="fileLogo", class="form-control") }}
-              <label for="fileLogo">Logo</label>
-            </div>
+             <div class="form-label-group">
+                {{ formulario.logo(id="fileLogo", class="form-control") }}
+                <label for="fileLogo">Logo</label>
+             </div>
           </div>
           <div class="form-group">
-            <div class="form-label-group">
-              {{ formulario.sobre(id="textAreaSobre", class="form-control", required="required") }}              
-            </div>
-            <span class="help-block"> Conte-nos um pouco sobre a sua empresa. </span>            
+             <div class="form-label-group">
+                {{ formulario.sobre(id="textAreaSobre", class="form-control", required="required") }}              
+             </div>
+             <span class="help-block"> Conte-nos um pouco sobre a sua empresa. </span>            
           </div>
           <div class="form-group">
-            <div class="form-label-group tag-container">
-              {{ formulario.interesses(id="inputInteresses") }}              
-            </div>
-            <span class="help-block"> Gostariamos de saber seus interesses (Ex: Tecnologia). </span>                        
+             <div class="form-label-group tag-container">
+                {{ formulario.interesses(id="inputInteresses") }}              
+             </div>
+             <span class="help-block"> Gostariamos de saber seus interesses (Ex: Tecnologia). </span>                        
           </div>
           {{ formulario.tags_digitadas(id="inputTagsDigitadas") }}
           <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <div class="form-label-group">
-                  {{ formulario.senha(id="inputSenha", class="form-control", placeholder="Senha", required="required") }}
-                  <label for="inputSenha">Senha</label>
+             <div class="form-row">
+                <div class="col-md-6">
+                   <div class="form-label-group">
+                      {{ formulario.senha(id="inputSenha", class="form-control", placeholder="Senha", required="required") }}
+                      <label for="inputSenha">Senha</label>
+                   </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-label-group">
-                  {{ formulario.senha_confirmar(id="inputSenhaConfirmar", class="form-control", placeholder="Confirme a senha", required="required") }}
-                  <label for="inputSenhaConfirmar">Confirme a senha</label>
+                <div class="col-md-6">
+                   <div class="form-label-group">
+                      {{ formulario.senha_confirmar(id="inputSenhaConfirmar", class="form-control", placeholder="Confirme a senha", required="required") }}
+                      <label for="inputSenhaConfirmar">Confirme a senha</label>
+                   </div>
                 </div>
-              </div>
-            </div>
+             </div>
           </div>
           <button type="submit" class="btn btn-primary btn-block">Registrar</button>
-        </form>
-        <div class="text-center">
+       </form>
+       <div class="text-center">
           <a class="d-block small mt-3" href="{{ url_for('login') }}">Já possuo uma conta</a>
-        </div>
-      </div>
+       </div>
     </div>
-  </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-  <!-- BootBox (caixas de diálogo customizadas) -->
-  <script src="{{ url_for('static', filename='js/bootbox/bootbox.min.js') }}"></script>   
-
-  <!-- Arquivos externos -->
-  <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
-
-</body>
-
-</html>
+ </div>
+ 
+ {% endblock %}
