@@ -2,6 +2,8 @@ from app import db
 import datetime
 from app.models.funcoes import Funcoes
 
+# Faltam as classes: Contato, Celular, Telefone e E-mail
+
 class Perfil(db.Model):
     __tablename__ = "perfis"
     id            = db.Column(db.Integer, primary_key=True)
@@ -98,13 +100,13 @@ class Categoria(db.Model):
 class Postagem(db.Model):
     __tablename__   = "postagens"
     id              = db.Column(db.Integer, primary_key=True)
-    perfil_id       = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
-    categoria_id    = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
     titulo          = db.Column(db.String, nullable=False)
     conteudo        = db.Column(db.String, nullable=False)
     data            = db.Column(db.String, nullable=False)
     hora            = db.Column(db.String, nullable=False)
     media_avaliacao = db.Column(db.Float)
+    perfil_id       = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
+    categoria_id    = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)    
     perfil          = db.relationship('Perfil', foreign_keys=perfil_id)
     categoria       = db.relationship('Categoria', foreign_keys=categoria_id)
 
@@ -144,9 +146,9 @@ class Postagem(db.Model):
 class Avaliacao(db.Model):
     __tablename__ = "avaliacoes"
     id          = db.Column(db.Integer, primary_key=True)
-    perfil_id   = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
-    postagem_id = db.Column(db.Integer, db.ForeignKey('postagens.id'), nullable=False)
     nota        = db.Column(db.Integer, nullable=False)
+    perfil_id   = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
+    postagem_id = db.Column(db.Integer, db.ForeignKey('postagens.id'), nullable=False)    
     perfil      = db.relationship('Perfil', foreign_keys=perfil_id)
     postagem    = db.relationship('Postagem', foreign_keys=postagem_id)
 
@@ -158,11 +160,11 @@ class Avaliacao(db.Model):
 class Comentario(db.Model):
     __tablename__ = "comentarios"
     id          = db.Column(db.Integer, primary_key=True)
-    perfil_id   = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
-    postagem_id = db.Column(db.Integer, db.ForeignKey('postagens.id'), nullable=False)
     conteudo    = db.Column(db.String, nullable=False)
     data        = db.Column(db.String, nullable=False)
     hora        = db.Column(db.String, nullable=False)
+    perfil_id   = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
+    postagem_id = db.Column(db.Integer, db.ForeignKey('postagens.id'), nullable=False)    
     perfil      = db.relationship('Perfil', foreign_keys=perfil_id)
     postagem    = db.relationship('Postagem', foreign_keys=postagem_id)
 

@@ -37,6 +37,18 @@
   .bg-grey {
     background-color: #343a40;
   }
+
+  .bg-light-green {
+    background-color: #99cc00;
+  }
+
+  .bg-light-pink {
+    background-color: #ff5050;
+  }
+
+  .bg-light-purple {
+    background-color: #9933ff;
+  }
   
   #first-step {
     height: 50%;
