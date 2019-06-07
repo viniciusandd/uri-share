@@ -123,6 +123,7 @@
           <a class="dropdown-item" href="#">Listar</a>
         </div>
       </li>
+      {% if current_user.id == 1 %}
       <!-- Poderes exclusivos do adm -->
       <li class="nav-item">
           <a class="btn btn-secondary nav-link active" href="#">
@@ -142,7 +143,8 @@
         <a class="nav-link" href="{{ url_for('ranking') }}">
           <i class="fas fa-fw fa-book-dead"></i>
           <span>Banir Perfil</span></a>
-      </li>
+      </li>      
+      {% endif %}
     </ul>
 
     <div id="content-wrapper">

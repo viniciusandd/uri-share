@@ -19,7 +19,8 @@ def raiz():
     return "Bem vindo ao Share!"
 
 @app.route("/registrar", methods=['GET', 'POST'])
-def registrar():
+@app.route("/registrar/<int:id>", methods=['GET', 'POST'])
+def registrar(id=None):
     formulario = PerfilForm()
     formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
     if formulario.validate_on_submit():
