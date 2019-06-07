@@ -17,27 +17,29 @@
         <!-- Div to center the header image/name/social buttons -->
         <div class="card flex-row">
             <div class="card-header border-0">
-                <img src="//placehold.it/200" alt="">
+                <img id="empresa-logo" src="../../static/assets/logos/{{ perfil.logo }}" alt="">
             </div>
-            <div class="card-block px-2">
-                <p>
-                    {{ perfil.nome_fantasia }} 
-                    <button type="button" class="btn btn-outline-secondary btn-sm">Editar perfil</button>                    
-                </p>
-                <p>                    
-                    <button type="button" class="btn btn-outline-secondary">
-                        <strong>10</strong> postagens
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">
-                        <strong>10</strong> comentários
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">
-                        <strong>10</strong> avaliações
-                    </button>                    
-                </p>
-                {{ perfil.razao_social }} <br>
-                <p class="card-text">{{ perfil.sobre }}</p>
-                <p class="card-text">{{ perfil.interesses }}</p>
+            <div class="card-block px-2">                
+                <div class="row row-nome-fantasia">
+                    <span id="nome-fantasia">{{ perfil.nome_fantasia }}</span> 
+                    <button type="button" class="btn btn-outline-secondary btn-sm">Editar perfil</button>                                        
+                </div>
+                
+                <div class="row row-contadores">
+                    <span><strong>10</strong> postagens </span>
+                    <span><strong>10</strong> comentários </span>
+                    <span><strong>10</strong> avaliações </span>
+                </div>
+
+                <div class="razao-sobre-interesses">
+                    <p id="razao">{{ perfil.razao_social }}</p>
+                    <p class="card-text">{{ perfil.sobre }}</p>
+                    <p class="card-text">
+                        {% for interesse in perfil.lista_de_interesses() %}
+                            <span class="badge badge-secondary">{{ interesse }}</span>
+                        {% endfor %}
+                    </p>
+                </div>
             </div>
         </div>
 

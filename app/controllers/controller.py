@@ -111,11 +111,7 @@ def home():
     return render_template('home.html', postagens=postagens, comentarios=comentarios)
 
 def buscar_categorias_id():
-    interesses     = current_user.interesses
-    interesses     = interesses.split(",")
-    qtd_interesses = len(interesses)
-    interesses.pop(qtd_interesses - 1)
-
+    interesses = current_user.lista_de_interesses()
     categorias = Categoria.query.all()
     list_categorias_id = []
     for categoria in categorias:
@@ -159,10 +155,11 @@ def perfil(id=None):
         perfil = current_user
 
     postagens   = Postagem.query.filter_by(perfil_id=perfil.id).all()    
-    comentarios = Comentario.query.filter_by(perfil_id=perfil.id).all()    
+    comentarios = Comentario.query.filter_by(perfil_id=perfil.id).all()
+    avaliacoes  = Avaliacao.query.filter_by(perfil_id=perfil.id).all()
 
     return render_template(
-        'perfil.html', perfil=perfil, postagens=postagens, comentarios=comentarios
+        'perfil.html', perfil=perfil, postagens=postagens, comentarios=comentarios, avaliacoes=avaliacoes
     )
 
 @app.route("/nova_postagem", methods=['GET', 'POST'])

@@ -69,6 +69,12 @@ class Perfil(db.Model):
     def __repr__(self):
         return "<Perfil %r>" % self.razao_social
 
+    def lista_de_interesses(self):
+        lista_interesses = self.interesses.split(",")
+        cont = len(lista_interesses)
+        lista_interesses.pop(cont - 1)
+        return lista_interesses
+
 class Cidade(db.Model):
     __tablename__ = "cidades"
     id        = db.Column(db.Integer, primary_key=True)
