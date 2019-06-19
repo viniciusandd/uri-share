@@ -1,4 +1,8 @@
-{% extends 'externo.html' %}
+{% if not editar %}
+   {% extends 'externo.html' %}
+{% else %}
+   {% extends 'interno.html' %}
+{% endif %}
 
 {% block titulo %}
   {{ super() }} - Registrar
@@ -22,6 +26,7 @@
           </div>
           {% endif %}
           {% endwith %}
+          {{ formulario.id(id="inputId") }}
           <div class="form-group">
              <div class="form-label-group">
                 {{ formulario.razao_social(id="inputRazaoSocial", class="form-control", placeholder="Razão social", required="required") }}
@@ -118,11 +123,13 @@
                 </div>
              </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+          <button type="submit" class="btn btn-primary btn-block">{{ 'Gravar' if editar else 'Registrar' }}</button>
        </form>
+       {% if not editar %}
        <div class="text-center">
           <a class="d-block small mt-3" href="{{ url_for('login') }}">Já possuo uma conta</a>
        </div>
+       {% endif %}
     </div>
  </div>
  

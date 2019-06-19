@@ -34,28 +34,45 @@ def registrar(id=None):
                     'app', 'static', 'assets', 'logos', new_filename
                 )
             )
-            perfil = Perfil(
-                formulario.razao_social.data,
-                formulario.nome_fantasia.data,
-                formulario.cnpj.data,
-                formulario.senha.data,
-                formulario.logradouro.data,
-                formulario.complemento.data,
-                formulario.numero.data,
-                formulario.bairro.data,
-                formulario.cep.data,
-                formulario.sobre.data,
-                formulario.tags_digitadas.data,
-                formulario.cidade_id.data,
-                new_filename
-            )
-            db.session.add(perfil)
+
+            if not formulario.id.data:
+                perfil = Perfil(
+                    formulario.razao_social.data,
+                    formulario.nome_fantasia.data,
+                    formulario.cnpj.data,
+                    formulario.senha.data,
+                    formulario.logradouro.data,
+                    formulario.complemento.data,
+                    formulario.numero.data,
+                    formulario.bairro.data,
+                    formulario.cep.data,
+                    formulario.sobre.data,
+                    formulario.tags_digitadas.data,
+                    formulario.cidade_id.data,
+                    new_filename
+                )
+                db.session.add(perfil)                
+            else:
+                perfil = Perfil.query.filter_by(id=id).first()
+                perfil.razao_social  = formulario.razao_social.data,
+                perfil.nome_fantasia = formulario.nome_fantasia.data,
+                perfil.cnpj          = formulario.cnpj.data,
+                perfil.senha         = formulario.senha.data,
+                perfil.logradouro    = formulario.logradouro.data,
+                perfil.complemento   = formulario.complemento.data,
+                perfil.numero        = formulario.numero.data,
+                perfil.bairro        = formulario.bairro.data,
+                perfil.cep           = formulario.bairro.data,
+                perfil.sobre         = formulario.sobre.data,
+                perfil.interesses    = formulario.interesses.data,
+                perfil.cidade_id     = formulario.cidade_id.data,
+                perfil.logo          = new_filename
+            
             bErro = False
             sMsgErro = ""
             try:
                 db.session.commit()       
             except Exception as e:
-                print(e)
                 bErro = True
                 sMsgErro = "Falha ao registrar o perfil, revise suas informações."
             
@@ -67,6 +84,9 @@ def registrar(id=None):
                     )
                 )
             else:
+                if bEditar:
+                    return redirect(url_for('perfil'))
+                    
                 flash("Você foi registrado com sucesso.")
                 return redirect(url_for("login"))
         else:
@@ -74,7 +94,25 @@ def registrar(id=None):
     else:
         print(formulario.errors)
 
-    return render_template('registrar.html', formulario=formulario)
+    bEditar = False
+    if id:
+        bEditar = True
+        perfil  = Perfil.query.filter_by(id=id).first()  
+        formulario.id.data            = perfil.id      
+        formulario.razao_social.data  = perfil.razao_social
+        formulario.nome_fantasia.data = perfil.nome_fantasia
+        formulario.cnpj.data          = perfil.cnpj
+        formulario.senha.data         = perfil.senha
+        formulario.logradouro.data    = perfil.logradouro
+        formulario.complemento.data   = perfil.complemento
+        formulario.numero.data        = perfil.numero
+        formulario.bairro.data        = perfil.bairro
+        formulario.cep.data           = perfil.cep
+        formulario.sobre.data         = perfil.sobre
+        formulario.interesses.data    = perfil.interesses
+        formulario.cidade_id.data     = perfil.cidade_id
+
+    return render_template('registrar.html', formulario=formulario, editar=bEditar)
 
 # Para que o login funcione, é necessário que o campo formulario.csrf_token
 # esteja no HTML, sem isso ele não será um formulário válido.

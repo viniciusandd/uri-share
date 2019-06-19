@@ -9,6 +9,7 @@ class LoginForm(FlaskForm):
     lembrar_senha = BooleanField("lembrar_senha")
 
 class PerfilForm(FlaskForm):
+    id              = HiddenField("id")
     razao_social    = StringField("razao_social", validators=[DataRequired()])
     nome_fantasia   = StringField("nome_fantasia", validators=[DataRequired()])
     cnpj            = StringField("cnpj", validators=[DataRequired()])
