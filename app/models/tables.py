@@ -182,4 +182,15 @@ class Comentario(db.Model):
         self.hora = Funcoes.retornar_hora_atual()
 
     def __repr__(self):
-        return "<Comentario %r>" % self.id
+        return "<Comentario %r - %r>" % (self.id, self.conteudo)
+
+class SugestaoCategoria(db.Model):
+    __tablename__ = "sugestoes_categorias"
+    id        = db.Column(db.Integer, primary_key=True)
+    descricao = db.Column(db.String, nullable=False)
+
+    def __init__(self, descricao):
+        self.descricao = descricao
+    
+    def __repr__(self):
+        return "<SugestaoCategoria %r>" % self.descricao

@@ -1,0 +1,50 @@
+{% extends 'interno.html' %}
+
+{% block titulo %}
+    {{ super() }} - Home
+{% endblock %}
+
+{% block conteudo %}
+<div class="card card-register mx-auto mt-5">
+    <div class="card-header">Criar postagem</div>
+    <div class="card-body">
+        <form action="" method="POST">
+            {{ formulario.csrf_token }}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning" role="alert">
+                <ul class=flashes>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+                </div>
+            {% endif %}
+            {% endwith %}
+            
+            <div class="form-group">
+                <div class="form-label-group">
+                    {{ formulario.titulo(id="inputTitulo", class="form-control", placeholder="Título", required="required") }}
+                    <label for="inputTitulo">Título</label>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-label-group">
+                    {{ formulario.conteudo(id="textAreaConteudo", class="form-control", placeholder="Conteúdo", required="required") }}            
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-label-group">
+                    {{ formulario.categoria_id(id="selectCategoriaId", class="form-control", placeholder="Selecione a categoria", required="required") }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Compartilhar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

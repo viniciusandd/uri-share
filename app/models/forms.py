@@ -44,3 +44,5 @@ class PostagemForm(FlaskForm):
     titulo       = StringField("titulo", validators=[DataRequired()])
     conteudo     = TextAreaField("conteudo", validators=[DataRequired()])
     categoria_id = SelectField("categoria", coerce=int)
+
+# class SugestaoCategoriaForm(FlaskForm):

@@ -339,6 +339,10 @@ def buscar():
 
         return render_template('buscas.html', perfis=perfis, postagens=postagens)
 
+@app.route("/nova_sugestao_categoria", methods=['POST'])
+def nova_sugestao_categoria():
+    pass
+
 @app.route("/ranking")
 def ranking():
     postagens = Postagem.query.order_by(Postagem.media_avaliacao.desc()).limit(20).all()
