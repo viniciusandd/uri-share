@@ -346,7 +346,8 @@ def nova_sugestao_categoria():
     if formulario.validate_on_submit():
         sugestao_categoria = SugestaoCategoria(
             current_user.id,
-            formulario.descricao.data
+            formulario.descricao.data,
+            1
         )
         db.session.add(sugestao_categoria)
         bErro = False

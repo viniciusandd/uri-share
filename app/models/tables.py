@@ -188,12 +188,19 @@ class SugestaoCategoria(db.Model):
     __tablename__ = "sugestoes_categorias"
     id        = db.Column(db.Integer, primary_key=True)
     perfil_id = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
-    descricao = db.Column(db.String, nullable=False)    
+    descricao = db.Column(db.String, nullable=False)
+    status    = db.Column(db.Integer, nullable=False)
     perfil    = db.relationship('Perfil', foreign_keys=perfil_id)
 
-    def __init__(self, perfil_id, descricao):
+    # Existirão 3 status:
+    # 1 - Pendente
+    # 2 - Aceita
+    # 3 - Negada
+
+    def __init__(self, perfil_id, descricao, status):
         self.perfil_id = perfil_id
         self.descricao = descricao
+        self.status    = status
     
     def __repr__(self):
         return "<SugestaoCategoria %r>" % self.descricao
