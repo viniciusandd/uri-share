@@ -1,28 +1,22 @@
 ﻿INSERT INTO categorias (id,descricao) VALUES (
-1,'Ciência');
+1,'Tecnologia');
 INSERT INTO categorias (id,descricao) VALUES (
-2,'Tecnologia');
+2,'Contabilidade');
 INSERT INTO categorias (id,descricao) VALUES (
-3,'Economia');
+3,'Empreendedorismo');
 INSERT INTO categorias (id,descricao) VALUES (
-4,'Contabilidade');
+4,'Comércio');
 INSERT INTO categorias (id,descricao) VALUES (
-5,'Gastronomia');
+5,'Economia');
 INSERT INTO categorias (id,descricao) VALUES (
-6,'Administração');
+6,'Turismo');
 INSERT INTO categorias (id,descricao) VALUES (
-7,'Comércio');
+7,'Agronomia');
 INSERT INTO categorias (id,descricao) VALUES (
-8,'Construção');
+8,'Arquitetura');
 INSERT INTO categorias (id,descricao) VALUES (
-9,'Arquitetura');
+9,'Publicidade');
 INSERT INTO categorias (id,descricao) VALUES (
-10,'Publicidade');
+10,'Marketing');
 INSERT INTO categorias (id,descricao) VALUES (
-11,'Marketing');
-INSERT INTO categorias (id,descricao) VALUES (
-12,'Hotelaria');
-INSERT INTO categorias (id,descricao) VALUES (
-13,'Turismo');
-INSERT INTO categorias (id,descricao) VALUES (
-14,'Metalmecânica');
+11,'Engenharia_Civil');
