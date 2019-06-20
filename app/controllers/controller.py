@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 from app.models.tables import *
 from app.models.ranking import Ranking
-from app.models.forms import LoginForm, PerfilForm, PostagemForm
+from app.models.forms import *
 
 @login_manager.user_loader
 def load_user(id):
@@ -20,7 +20,7 @@ def raiz():
 
 @app.route("/registrar", methods=['GET', 'POST'])
 def registrar():
-    formulario = PerfilForm()
+    formulario = RegistrarForm()
     formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
     if formulario.validate_on_submit():
         if formulario.senha.data == formulario.senha_confirmar.data:
@@ -163,6 +163,58 @@ def perfil(id=None):
     return render_template(
         'perfil.html', perfil=perfil, postagens=postagens, comentarios=comentarios, avaliacoes=avaliacoes
     )
+
+@app.route("/perfil_editar", methods=['GET', 'POST'])
+def perfil_editar():
+    perfil = Perfil.query.filter_by(id=current_user.id).first()
+    formulario = EditarPerfilForm()
+    formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
+    
+    if formulario.validate_on_submit():
+
+        print(formulario.interesses.data)
+
+        perfil.razao_social  = formulario.razao_social.data
+        perfil.nome_fantasia = formulario.nome_fantasia.data        
+        perfil.cnpj          = formulario.cnpj.data        
+        perfil.logradouro    = formulario.logradouro.data        
+        perfil.complemento   = formulario.complemento.data        
+        perfil.numero        = formulario.numero.data        
+        perfil.bairro        = formulario.bairro.data        
+        perfil.cep           = formulario.cep.data        
+        perfil.sobre         = formulario.sobre.data        
+        perfil.interesses    = formulario.tags_digitadas.data        
+        perfil.cidade_id     = formulario.cidade_id.data        
+
+    print(perfil.interesses)
+
+    formulario.id.data             = perfil.id
+    formulario.razao_social.data   = perfil.razao_social
+    formulario.nome_fantasia.data  = perfil.nome_fantasia
+    formulario.cnpj.data           = perfil.cnpj
+    formulario.logradouro.data     = perfil.logradouro
+    formulario.complemento.data    = perfil.complemento
+    formulario.numero.data         = perfil.numero
+    formulario.bairro.data         = perfil.bairro
+    formulario.cep.data            = perfil.cep
+    formulario.sobre.data          = perfil.sobre
+    formulario.tags_digitadas.data = perfil.interesses
+    formulario.cidade_id.data      = perfil.cidade_id
+
+    bErro = False
+    try:
+        db.session.commit()
+    except Exception as e:
+        bErro = True
+        print(type(e))
+        print('deu bad')
+
+    if bErro:
+        flash("Falha ao editar o perfil")
+    else:
+        flash("Perfil editado com sucesso")
+
+    return render_template('perfil_editar.html', formulario=formulario)
 
 @app.route("/nova_postagem", methods=['GET', 'POST'])
 def nova_postagem():

@@ -1,13 +1,12 @@
-{% extends 'externo.html' %}
+{% extends 'interno.html' %}
 
 {% block titulo %}
-  {{ super() }} - Registrar
+    {{ super() }} - Editar Perfil
 {% endblock %}
 
 {% block conteudo %}
-
 <div class="card card-register mx-auto mt-5">
-    <div class="card-header">Registre uma conta</div>
+    <div class="card-header">Editar perfil</div>
     <div class="card-body">
        <form action="" method="POST" enctype="multipart/form-data">
           {{ formulario.csrf_token }}
@@ -22,6 +21,7 @@
           </div>
           {% endif %}
           {% endwith %}
+          {{ formulario.id(id="inputId") }}
           <div class="form-group">
              <div class="form-label-group">
                 {{ formulario.razao_social(id="inputRazaoSocial", class="form-control", placeholder="Razão social", required="required") }}
@@ -85,12 +85,6 @@
           </div>
           <div class="form-group">
              <div class="form-label-group">
-                {{ formulario.logo(id="fileLogo", class="form-control") }}
-                <label for="fileLogo">Logo</label>
-             </div>
-          </div>
-          <div class="form-group">
-             <div class="form-label-group">
                 {{ formulario.sobre(id="textAreaSobre", class="form-control", required="required") }}              
              </div>
              <span class="help-block"> Conte-nos um pouco sobre a sua empresa. </span>            
@@ -102,28 +96,8 @@
              <span class="help-block"> Gostariamos de saber seus interesses (Ex: Tecnologia). </span>                        
           </div>
           {{ formulario.tags_digitadas(id="inputTagsDigitadas") }}
-          <div class="form-group">
-             <div class="form-row">
-                <div class="col-md-6">
-                   <div class="form-label-group">
-                      {{ formulario.senha(id="inputSenha", class="form-control", placeholder="Senha", required="required") }}
-                      <label for="inputSenha">Senha</label>
-                   </div>
-                </div>
-                <div class="col-md-6">
-                   <div class="form-label-group">
-                      {{ formulario.senha_confirmar(id="inputSenhaConfirmar", class="form-control", placeholder="Confirme a senha", required="required") }}
-                      <label for="inputSenhaConfirmar">Confirme a senha</label>
-                   </div>
-                </div>
-             </div>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+          <button type="submit" class="btn btn-primary btn-block">Atualizar informações</button>
        </form>
-       <div class="text-center">
-          <a class="d-block small mt-3" href="{{ url_for('login') }}">Já possuo uma conta</a>
-       </div>
     </div>
  </div>
- 
- {% endblock %}
+{% endblock %}

@@ -40,6 +40,7 @@ input.addEventListener('keyup', (e) => {
     if (e.keyCode === 32) {
       if (inputLenght > 0) {
         e.target.value.split(',').forEach(tag => {
+          console.log(tag.trim());
           tags.push(tag.trim());
         });
         
@@ -67,3 +68,11 @@ document.addEventListener('click', (e) => {
 
 input.focus();
 
+$(document).ready(function() {
+  console.log(inputTarget.value);
+  tags = inputTarget.value.split(',');
+  let length_tags = tags.length;
+  tags.splice(length_tags-1, 1);
+  console.log(tags);
+  addTags();
+});

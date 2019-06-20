@@ -8,8 +8,7 @@ class LoginForm(FlaskForm):
     senha         = PasswordField("senha", validators=[DataRequired()])
     lembrar_senha = BooleanField("lembrar_senha")
 
-class PerfilForm(FlaskForm):
-    id              = HiddenField("id")
+class RegistrarForm(FlaskForm):
     razao_social    = StringField("razao_social", validators=[DataRequired()])
     nome_fantasia   = StringField("nome_fantasia", validators=[DataRequired()])
     cnpj            = StringField("cnpj", validators=[DataRequired()])
@@ -25,6 +24,21 @@ class PerfilForm(FlaskForm):
     interesses      = StringField("interesses")
     tags_digitadas  = HiddenField("tags_digitadas")
     cidade_id       = SelectField("cidade", coerce=int)
+
+class EditarPerfilForm(FlaskForm):
+    id              = HiddenField("id")
+    razao_social    = StringField("razao_social", validators=[DataRequired()])
+    nome_fantasia   = StringField("nome_fantasia", validators=[DataRequired()])
+    cnpj            = StringField("cnpj", validators=[DataRequired()])
+    logradouro      = StringField("logradouro", validators=[DataRequired()])
+    complemento     = StringField("complemento")
+    numero          = StringField("numero", validators=[DataRequired()])
+    bairro          = StringField("bairro", validators=[DataRequired()])
+    cep             = StringField("cep", validators=[DataRequired()])
+    sobre           = TextAreaField("sobre", validators=[DataRequired()])
+    interesses      = StringField("interesses")
+    tags_digitadas  = HiddenField("tags_digitadas")
+    cidade_id       = SelectField("cidade", coerce=int)    
 
 class PostagemForm(FlaskForm):
     titulo       = StringField("titulo", validators=[DataRequired()])
