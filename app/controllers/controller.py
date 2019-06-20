@@ -170,10 +170,8 @@ def perfil_editar():
     formulario = EditarPerfilForm()
     formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
     
-    if formulario.validate_on_submit():
-
+    if formulario.validate_on_submit():        
         print(formulario.interesses.data)
-
         perfil.razao_social  = formulario.razao_social.data
         perfil.nome_fantasia = formulario.nome_fantasia.data        
         perfil.cnpj          = formulario.cnpj.data        
@@ -184,10 +182,21 @@ def perfil_editar():
         perfil.cep           = formulario.cep.data        
         perfil.sobre         = formulario.sobre.data        
         perfil.interesses    = formulario.tags_digitadas.data        
-        perfil.cidade_id     = formulario.cidade_id.data        
+        perfil.cidade_id     = formulario.cidade_id.data 
 
-    print(perfil.interesses)
+        bErro = False
+        try:
+            db.session.commit()
+        except Exception as e:
+            bErro = True
+            print('Erro ao gravar as atualizações no perfil')
 
+        if bErro:
+            flash("Falha ao editar o perfil")
+        else:
+            flash("Perfil atualizado com sucesso")             
+
+    perfil = Perfil.query.filter_by(id=current_user.id).first()
     formulario.id.data             = perfil.id
     formulario.razao_social.data   = perfil.razao_social
     formulario.nome_fantasia.data  = perfil.nome_fantasia
@@ -200,19 +209,6 @@ def perfil_editar():
     formulario.sobre.data          = perfil.sobre
     formulario.tags_digitadas.data = perfil.interesses
     formulario.cidade_id.data      = perfil.cidade_id
-
-    bErro = False
-    try:
-        db.session.commit()
-    except Exception as e:
-        bErro = True
-        print(type(e))
-        print('deu bad')
-
-    if bErro:
-        flash("Falha ao editar o perfil")
-    else:
-        flash("Perfil editado com sucesso")
 
     return render_template('perfil_editar.html', formulario=formulario)
 
