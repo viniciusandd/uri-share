@@ -339,9 +339,34 @@ def buscar():
 
         return render_template('buscas.html', perfis=perfis, postagens=postagens)
 
-@app.route("/nova_sugestao_categoria", methods=['POST'])
+@app.route("/nova_sugestao_categoria", methods=['GET','POST'])
 def nova_sugestao_categoria():
-    pass
+    formulario = SugestaoCategoriaForm()
+
+    if formulario.validate_on_submit():
+        sugestao_categoria = SugestaoCategoria(
+            current_user.id,
+            formulario.descricao.data
+        )
+        db.session.add(sugestao_categoria)
+        bErro = False
+        try:
+            db.session.commit()
+        except Exception as e:
+            bErro = True
+            print('Falha ao inserir sugestão categoria')
+        
+        if bErro:
+            flash("Falha ao inserir sugestão categoria")
+        else:
+            flash("Sugestão de categoria gravada com sucesso")            
+               
+    return render_template('sugestao_categoria_nova.html', formulario=formulario)
+
+@app.route("/listar_sugestao_categoria", methods=['GET'])
+def listar_sugestao_categoria():
+    sugestoes_categorias = SugestaoCategoria.query.filter_by(perfil_id=current_user.id).all()
+    return render_template('sugestao_categoria_listar.html', sugestoes_categorias=sugestoes_categorias)
 
 @app.route("/ranking")
 def ranking():

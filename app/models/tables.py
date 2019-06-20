@@ -187,9 +187,12 @@ class Comentario(db.Model):
 class SugestaoCategoria(db.Model):
     __tablename__ = "sugestoes_categorias"
     id        = db.Column(db.Integer, primary_key=True)
-    descricao = db.Column(db.String, nullable=False)
+    perfil_id = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
+    descricao = db.Column(db.String, nullable=False)    
+    perfil    = db.relationship('Perfil', foreign_keys=perfil_id)
 
-    def __init__(self, descricao):
+    def __init__(self, perfil_id, descricao):
+        self.perfil_id = perfil_id
         self.descricao = descricao
     
     def __repr__(self):

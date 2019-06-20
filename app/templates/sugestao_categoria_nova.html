@@ -6,7 +6,7 @@
 
 {% block conteudo %}
 <div class="card card-register mx-auto mt-5">
-    <div class="card-header">Criar postagem</div>
+    <div class="card-header">Sugerir uma nova categoria</div>
     <div class="card-body">
         <form action="" method="POST">
             {{ formulario.csrf_token }}
@@ -24,26 +24,12 @@
             
             <div class="form-group">
                 <div class="form-label-group">
-                    {{ formulario.titulo(id="inputTitulo", class="form-control", placeholder="Título", required="required") }}
-                    <label for="inputTitulo">Título</label>
+                    {{ formulario.descricao(id="inputDescricao", class="form-control", placeholder="", required="required") }}
+                    <label for="inputDescricao">Descrição</label>
                 </div>
             </div>
 
-
-            <div class="form-group">
-                <div class="form-label-group">
-                    {{ formulario.conteudo(id="textAreaConteudo", class="form-control", placeholder="Conteúdo", required="required") }}            
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="form-label-group">
-                    {{ formulario.categoria_id(id="selectCategoriaId", class="form-control", placeholder="Selecione a categoria", required="required") }}
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block">Compartilhar</button>
+            <button type="submit" class="btn btn-primary btn-block">Sugerir</button>
         </form>
     </div>
 </div>
