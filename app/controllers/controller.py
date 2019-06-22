@@ -5,6 +5,7 @@ from sqlalchemy import or_
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 from werkzeug.utils import secure_filename
+import requests
 
 from app.models.tables import *
 from app.models.ranking import Ranking
@@ -23,69 +24,111 @@ def registrar():
     formulario = RegistrarForm()
     formulario.cidade_id.choices = [(g.id, g.nome) for g in Cidade.query.order_by('nome')]
     if formulario.validate_on_submit():
-        if formulario.senha.data == formulario.senha_confirmar.data:
-            filename = secure_filename(formulario.logo.data.filename)
-            dot = filename.find('.')
-            len_filename = len(filename)
-            new_filename = formulario.cnpj.data + filename[dot:]
-            formulario.logo.data.save(
-                os.path.join(
-                    'app', 'static', 'assets', 'logos', new_filename
-                )
-            )
-
-            perfil = Perfil(
-                formulario.razao_social.data,
-                formulario.nome_fantasia.data,
-                formulario.cnpj.data,
-                formulario.senha.data,
-                formulario.logradouro.data,
-                formulario.complemento.data,
-                formulario.numero.data,
-                formulario.bairro.data,
-                formulario.cep.data,
-                formulario.sobre.data,
-                formulario.tags_digitadas.data,
-                formulario.cidade_id.data,
-                new_filename
-            )
-            db.session.add(perfil)
-            
-            bErro = False
-            sMsgErro = ""
-            try:
-                db.session.commit()       
-            except Exception as e:
-                bErro = True
-                sMsgErro = "Falha ao registrar o perfil, revise suas informações."
-                print("Falha ao commitar a sessão do db")
-            
-            if bErro:
-                flash(sMsgErro)
-                os.remove(
+        retorno_validacao = validar_cnpj(formulario.cnpj.data)
+        if retorno_validacao[0]:
+            if formulario.senha.data == formulario.senha_confirmar.data:
+                filename = secure_filename(formulario.logo.data.filename)
+                dot = filename.find('.')
+                len_filename = len(filename)
+                new_filename = formulario.cnpj.data + filename[dot:]
+                formulario.logo.data.save(
                     os.path.join(
                         'app', 'static', 'assets', 'logos', new_filename
                     )
                 )
+
+                perfil = Perfil(
+                    formulario.razao_social.data,
+                    formulario.nome_fantasia.data,
+                    formulario.cnpj.data,
+                    formulario.senha.data,
+                    formulario.logradouro.data,
+                    formulario.complemento.data,
+                    formulario.numero.data,
+                    formulario.bairro.data,
+                    formulario.cep.data,
+                    formulario.sobre.data,
+                    formulario.tags_digitadas.data,
+                    formulario.cidade_id.data,
+                    new_filename
+                )
+                db.session.add(perfil)
+                
+                bErro = False
+                sMsgErro = ""
+                try:
+                    db.session.commit()       
+                except Exception as e:
+                    bErro = True
+                    sMsgErro = "Falha ao registrar o perfil, revise suas informações."
+                    print("Falha ao commitar a sessão do db")
+                
+                if bErro:
+                    flash(sMsgErro)
+                    os.remove(
+                        os.path.join(
+                            'app', 'static', 'assets', 'logos', new_filename
+                        )
+                    )
+                else:
+                    perfil = Perfil.query.filter_by(cnpj=formulario.cnpj.data).first()
+                    interesses = perfil.lista_de_interesses()
+                    for interesse in interesses:
+                        categoria = Categoria.query.filter_by(descricao=interesse).first()
+                        if not categoria:
+                            sugestao = SugestaoCategoria(perfil.id, interesse, 1)
+                            db.session.add(sugestao)
+
+                    db.session.commit()
+
+                    flash("Você foi registrado com sucesso.")
+                    return redirect(url_for("login"))
             else:
-                perfil = Perfil.query.filter_by(cnpj=formulario.cnpj.data).first()
-                interesses = perfil.lista_de_interesses()
-                for interesse in interesses:
-                    categoria = Categoria.query.filter_by(descricao=interesse).first()
-                    if not categoria:
-                        sugestao = SugestaoCategoria(perfil.id, interesse, 1)
-                        db.session.add(sugestao)
-
-                db.session.commit()
-
-                flash("Você foi registrado com sucesso.")
-                return redirect(url_for("login"))
+                flash("As senhas digitadas são diferentes.")            
         else:
-            flash("As senhas digitadas são diferentes.")
+            flash(retorno_validacao[1])
     else:
         print(formulario.errors)
 
     return render_template('registrar.html', formulario=formulario)
+
+def validar_cnpj(cnpj):
+    url = "https://www.receitaws.com.br/v1/cnpj/%s" % cnpj
+    r = requests.get(url)
+
+    print(r.text)
+
+    # Se o formato não vier em JSON ou seja, 
+    # houve uma falha na resposta da receita
+    # ele retornará falha de validação
+    try:
+        resposta = r.json()
+    except:
+        return (False, "Falha ao estabelecer uma comunicação com a receita federal")
+
+    # Documentos que serão utilizados nos testes
+    documentos_testes = [
+        "00000000000000",
+        "00000000000001",
+        "00000000000002",
+        "00000000000003",
+        "00000000000004",
+        "00000000000005"
+    ]
+
+    if cnpj in documentos_testes:
+        return (True, "O CNPJ informado é utilizado apenas para testes, futuramente será REMOVIDO.")
+
+    # Status retornados pela receita federal: 
+    # 1 - OK (operação com sucesso) 
+    # 2 - ERROR (cnpj não encontrado ou falha na requisição)
+    if resposta["status"] == "ERROR":
+        return (False, "O CNPJ informado é inválido.")
+
+    if resposta["situacao"] != "ATIVA":
+        return (False, "O CNPJ informado não está com sua situação ATIVA.")
+
+    return (True, "CNPJ válido.")
 
 # Para que o login funcione, é necessário que o campo formulario.csrf_token
 # esteja no HTML, sem isso ele não será um formulário válido.
