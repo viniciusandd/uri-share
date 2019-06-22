@@ -414,4 +414,24 @@ def nova_categoria():
 
 @app.route("/sugestao_categoria_pendente")
 def sugestao_categoria_pendente():
-    sugestao_categoria_id = request.args.get('postagem_id', 0, type=int)
+    sugestao_categoria_id = request.args.get('sugestao_categoria_id', 0, type=int)
+    status = request.args.get('status', 0, type=int)
+
+    sugestao = SugestaoCategoria.query.filter_by(id=sugestao_categoria_id).first()
+    if sugestao:
+        sugestao.status = status
+    
+    if sugestao.status == 2:
+        categoria = Categoria(sugestao.descricao)
+        db.session.add(categoria)
+    
+    bErro = False
+    try:
+        db.session.commit()
+    except:
+        bErro = True
+
+    if not bErro:
+        return jsonify({"retorno":1})
+    else:
+        return jsonify({"retorno":0})
