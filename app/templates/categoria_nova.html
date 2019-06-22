@@ -1,12 +1,12 @@
 {% extends 'interno.html' %}
 
 {% block titulo %}
-    {{ super() }} - Cadastro Sugestão Categoria
+    {{ super() }} - Cadastro Categoria
 {% endblock %}
 
 {% block conteudo %}
 <div class="card card-register mx-auto mt-5">
-    <div class="card-header">Sugerir uma nova categoria</div>
+    <div class="card-header">Cadastrar uma nova categoria</div>
     <div class="card-body">
         <form action="" method="POST">
             {{ formulario.csrf_token }}
@@ -32,5 +32,33 @@
             <button type="submit" class="btn btn-primary btn-block">Sugerir</button>
         </form>
     </div>
+</div>
+
+<hr>
+
+<div style="text-align: center;">
+    <h3>
+        <span class="badge badge-secondary">Sugestões de Categoria</span>
+    </h3>
+    {% if sugestoes_categorias %}  
+    {% for sugestao in sugestoes_categorias %}    
+        <div class="list-group">
+        <a class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+            <h6 class="mb-1">
+                {{ sugestao.id }} - {{ sugestao.descricao.upper() }}
+                &nbsp; &nbsp;
+                <button class="btn btn-primary btn-sm btn-aceitar-sugestao" sugestao_categoria_id="{{ sugestao.id }}">
+                    Aceitar
+                </button>
+                <button  class="btn btn-danger btn-sm btn-rejeitar-sugestao" sugestao_categoria_id="{{ sugestao.id }}">
+                    Rejeitar
+                </button>
+            </h6>
+            </div>
+        </a>
+        </div>  
+    {% endfor %}
+    {% endif %}    
 </div>
 {% endblock %}

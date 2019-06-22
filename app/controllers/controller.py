@@ -386,3 +386,32 @@ def ranking():
 def listar_categorias():
     categorias = Categoria.query.all()
     return render_template('categorias_listar.html', categorias=categorias)
+
+@app.route("/nova_categoria", methods=['GET', 'POST'])
+def nova_categoria():
+    formulario = CategoriaForm()
+
+    if formulario.validate_on_submit():
+        categoria = Categoria(
+            formulario.descricao.data,
+        )
+        db.session.add(categoria)
+        bErro = False
+        try:
+            db.session.commit()
+        except Exception as e:
+            bErro = True
+            print('Falha ao inserir categoria')
+        
+        if bErro:
+            flash("Falha ao inserir categoria")
+        else:
+            flash("Categoria gravada com sucesso")    
+
+    sugestoes = SugestaoCategoria.query.filter_by(status=1).all()        
+               
+    return render_template('categoria_nova.html', formulario=formulario, sugestoes_categorias=sugestoes)
+
+@app.route("/sugestao_categoria_pendente")
+def sugestao_categoria_pendente():
+    sugestao_categoria_id = request.args.get('postagem_id', 0, type=int)

@@ -47,3 +47,6 @@ class PostagemForm(FlaskForm):
 
 class SugestaoCategoriaForm(FlaskForm):
     descricao = StringField("descricao", validators=[DataRequired()])
+
+class CategoriaForm(FlaskForm):
+    descricao = StringField("descricao", validators=[DataRequired()])
