@@ -36,7 +36,8 @@ $('.btnEnviarComentario').click(function() {
     });
 });
 
-$(".btnExcluirComentario").on( "click", function() {
+$(document).on( "click", ".btnExcluirComentario", function(event) {
+    event.preventDefault();
     let comentario_id = $(this).attr('comentario_id');
     bootbox.confirm("Tem certeza que deseja excluir esse comentário?", function(result) { 
         if (result) {
