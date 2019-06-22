@@ -7,12 +7,16 @@
 </h3>
 {% if sugestoes_categorias %}  
   {% for sugestao in sugestoes_categorias %}    
-    <div class="list-group">
+    <div id="bloco-sugestao-{{ sugestao.id }}" class="list-group">
       <a class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
-          <h6 class="mb-1">{{ loop.index }} - {{ sugestao.descricao }} 
+          <h6 class="mb-1">{{ sugestao.id }} - {{ sugestao.descricao }} 
             {% if sugestao.status == 1  %}
             <i class="fas fa-question-circle"></i>
+            &nbsp; &nbsp;
+            <button  class="btn btn-danger btn-sm btn-excluir-sugestao" sugestao_categoria_id="{{ sugestao.id }}">
+              Excluir <i class="fas fa-times"></i>
+            </button>
             {% elif sugestao.status == 2 %}
             <i class="fas fa-check-circle"></i>
             {% elif sugestao.status == 3 %}

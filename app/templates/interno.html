@@ -105,11 +105,13 @@
           <span>Timeline</span>
         </a>
       </li>
+      {% if current_user.id > 1 %}
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('nova_postagem') }}">
           <i class="fas fa-fw fa-plus-square"></i>
           <span>Nova Postagem</span></a>
       </li>      
+      {% endif %}
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('ranking') }}">
           <i class="fas fa-fw fa-award"></i>
@@ -232,6 +234,7 @@
   <script src="{{ url_for('static', filename='js/ranking.js') }}"></script>
   <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
   <script src="{{ url_for('static', filename='js/categorias.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/sugestao_categoria_listar.js') }}"></script>
 </body>
 
 </html>

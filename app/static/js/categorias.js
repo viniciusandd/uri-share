@@ -14,14 +14,11 @@ function iniciar(sugestao_categoria_id, status) {
                 status: status
             },
             success: function(data) {
-                mensagem = "";
+                mensagem = "Falha ao realizar a operação!";
                 if (data.retorno == 1) {
                     mensagem = "Operação finalizada com sucesso!";
                     $('#bloco-sugestao-'+sugestao_categoria_id).remove();
-                } else {
-                    mensagem = "Falha ao realizar a operação!";
                 }
-                    
                 dialog.find('.bootbox-body').html(mensagem);
             }
         });

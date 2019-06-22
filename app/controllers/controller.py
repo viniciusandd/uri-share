@@ -375,6 +375,20 @@ def listar_sugestao_categoria():
     sugestoes_categorias = SugestaoCategoria.query.filter_by(perfil_id=current_user.id).all()
     return render_template('sugestao_categoria_listar.html', sugestoes_categorias=sugestoes_categorias)
 
+@app.route("/excluir_sugestao_categoria")
+def excluir_sugestao_categoria():
+    sugestao_categoria_id = request.args.get('sugestao_categoria_id', 0, type=int)    
+    sugestao = SugestaoCategoria.query.filter_by(id=sugestao_categoria_id).first()
+    if sugestao:    
+        db.session.delete(sugestao)
+        try:
+            db.session.commit()
+        except Exception as e:
+            return jsonify({"retorno": 0})
+            
+        return jsonify({'retorno': 1})
+
+
 @app.route("/ranking")
 def ranking():
     postagens = Postagem.query.order_by(Postagem.media_avaliacao.desc()).limit(20).all()
@@ -431,7 +445,7 @@ def sugestao_categoria_pendente():
     except:
         bErro = True
 
-    if not bErro:
-        return jsonify({"retorno":1})
-    else:
+    if bErro:
         return jsonify({"retorno":0})
+    
+    return jsonify({"retorno":1})
