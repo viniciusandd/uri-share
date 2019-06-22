@@ -327,18 +327,39 @@ def novo_comentario():
     )
     db.session.add(comentario)
 
+    print(comentario)
+
     try:
         db.session.commit()
     except Exception as e:
         return jsonify({"status":0})
 
+    print(comentario)
+
     return jsonify(
         {
             "status": 1,
-            "perfil": current_user.nome_fantasia, 
+            "perfil": {
+                "id": current_user.id, 
+                "nome_fantasia": current_user.nome_fantasia
+            },
+            "comentario": comentario.id,
             "conteudo": conteudo
         }
     )
+
+@app.route("/excluir_comentario", methods=['GET'])
+def excluir_comentario():
+    comentario_id = request.args.get('comentario_id', 0, type=int)
+    comentario = Comentario.query.filter_by(id=comentario_id).first()
+    if comentario:
+        db.session.delete(comentario)
+        try:
+            db.session.commit()
+        except:
+            return jsonify({"retorno":0})
+        
+    return jsonify({"retorno":1})
 
 @app.route("/nova_avaliacao", methods=['GET'])
 def nova_avaliacao():

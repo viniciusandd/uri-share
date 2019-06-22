@@ -84,12 +84,18 @@ p {
   margin-top: 10px;
 }
 
-.timeline .timeline-body .timeline-item .content .all-comments button {
+.timeline .timeline-body .timeline-item .content .all-comments .list-group {  
+  margin-top: 10px;  
+}
+
+.timeline .timeline-body .timeline-item .content .all-comments .list-group .list-group-item {
   padding: 7px;
   margin-top: 5px;
   font-size: 12px;
+  color: black;
 }
 
-.timeline .timeline-body .timeline-item .content .all-comments .list-group {  
-  margin-top: 10px;  
+.timeline .timeline-body .timeline-item .content .all-comments .list-group .list-group-item .btnExcluirComentario {
+  float: right;
+  font-size: 10px;
 }

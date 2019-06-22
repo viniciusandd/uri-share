@@ -21,9 +21,12 @@ $('.btnEnviarComentario').click(function() {
         let status = data.status;
         if (data.status == 1) {
             input_conteudo.val('');
-            let linha = '<button type="button" class="list-group-item list-group-item-action">';
-            linha += '<a href="#">@'+data.perfil+'</a> - ' + data.conteudo;
-            linha += '</button>';
+            let linha = "";
+            linha += '<li id="bloco-comentario-'+ data.comentario +'" class="list-group-item">';
+            linha += '<a href="' + $SCRIPT_ROOT + '/perfil/' + data.perfil.id + '">@' + data.perfil.nome_fantasia;
+            linha += '</a> - ' + data.conteudo;
+            linha += '<button comentario_id="'+ data.comentario +'" type="button" class="btnExcluirComentario btn btn-danger btn-sm"><i class="fas fa-fw fa-trash-alt"></i></button>';
+            linha += '</li>';            
             list_group.html(linha + list_group_conteudo);            
         } else {
             bootbox.alert(
@@ -33,7 +36,30 @@ $('.btnEnviarComentario').click(function() {
     });
 });
 
-$( ".btnExcluirPostagem" ).click(function() {
+$(".btnExcluirComentario").on( "click", function() {
+    let comentario_id = $(this).attr('comentario_id');
+    bootbox.confirm("Tem certeza que deseja excluir esse comentário?", function(result) { 
+        if (result) {
+            $.ajax({
+                url: $SCRIPT_ROOT + "/excluir_comentario",
+                method: "GET",
+                dataType: "json",
+                data: { comentario_id: comentario_id },
+                success: function(data) {
+                    if (data.retorno == 1) {
+                        $('#bloco-comentario-'+comentario_id).remove();
+                    } else {
+                        bootbox.alert(
+                            "Ocorreram falhas ao excluir sua postagem, tente novamente."
+                        );                        
+                    }
+                } 
+            });
+        }
+    });
+});
+
+$(".btnExcluirPostagem").click(function() {
     let postagem_id    = $(this).attr('postagem_id');
     let bloco_postagem = $('#bloco_postagem'+postagem_id);
     bootbox.confirm("Tem certeza que deseja excluir essa postagem?", function(result) { 

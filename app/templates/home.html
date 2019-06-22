@@ -39,13 +39,23 @@
                                 </button>
                             </div>
                             <div class="all-comments">
-                                <div id="list-group{{ postagem.id }}" class="list-group">
-                                    {% for comentario in comentarios[postagem.id] %}
-                                        <button type="button" class="list-group-item list-group-item-action">
-                                            <a href="#">@{{ comentario.perfil.nome_fantasia }}</a> - {{ comentario.conteudo }}                                         
+                                <ul id="list-group{{ postagem.id }}" class="list-group">
+                                {% for comentario in comentarios[postagem.id] %}                                        
+                                    <li id="bloco-comentario-{{ comentario.id }}" class="list-group-item">
+                                        <a href="{{ url_for('perfil', id=comentario.perfil_id) }}">@{{ comentario.perfil.nome_fantasia }}</a> - 
+                                        {{ comentario.conteudo }} 
+                                        {% if comentario.perfil_id == current_user.id %}
+                                        <button comentario_id="{{ comentario.id }}" type="button" class="btnExcluirComentario btn btn-danger btn-sm">
+                                            <i class="fas fa-fw fa-trash-alt"></i>
                                         </button>
-                                    {% endfor %}
-                                </div>
+                                        {% else %}
+                                        <button type="button" class="btn btn-default btn-sm">
+                                            &nbsp;
+                                        </button>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                                </ul>
                             </div>                        
                         </div>
                     </div>
