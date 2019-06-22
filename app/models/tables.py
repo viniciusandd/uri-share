@@ -100,6 +100,13 @@ class Categoria(db.Model):
     id        = db.Column(db.Integer, primary_key=True)
     descricao = db.Column(db.String, unique=True, nullable=False)
 
+    def __init__(self, descricao):
+        self.descricao = descricao
+
+    def contador_postagens(self):
+        postagens = Postagem.query.filter_by(categoria_id=self.id).all()
+        return len(postagens)
+        
     def __repr__(self):
         return "<Categoria %r>" % self.descricao    
 

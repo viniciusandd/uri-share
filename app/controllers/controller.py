@@ -68,6 +68,16 @@ def registrar():
                     )
                 )
             else:
+                perfil = Perfil.query.filter_by(cnpj=formulario.cnpj.data).first()
+                interesses = perfil.lista_de_interesses()
+                for interesse in interesses:
+                    categoria = Categoria.query.filter_by(descricao=interesse).first()
+                    if not categoria:
+                        sugestao = SugestaoCategoria(perfil.id, interesse, 1)
+                        db.session.add(sugestao)
+
+                db.session.commit()
+
                 flash("Você foi registrado com sucesso.")
                 return redirect(url_for("login"))
         else:
@@ -372,3 +382,7 @@ def ranking():
     podium    = ranking.montar_podium()
     return render_template('ranking.html', postagens=postagens, podium=podium)
 
+@app.route("/listar_categorias")
+def listar_categorias():
+    categorias = Categoria.query.all()
+    return render_template('categorias_listar.html', categorias=categorias)

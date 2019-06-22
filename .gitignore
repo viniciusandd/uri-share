@@ -214,3 +214,5 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/linux,flask,python,visualstudiocode
 
+# Diretórios adicionados manualmente p/ serem ignorados
+/app/static/assets/logos/*

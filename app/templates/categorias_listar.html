@@ -1,0 +1,21 @@
+{% extends 'interno.html' %}
+
+{% block conteudo %}
+
+<h3>
+    <span class="badge badge-secondary">Categorias</span>
+</h3>
+{% if categorias %}  
+  {% for categoria in categorias %}    
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h6 class="mb-1">
+              {{ categoria.id }} - {{ categoria.descricao.upper() }} - Postagens: {{ categoria.contador_postagens() }} <i class="fas fa-arrow-alt-circle-up"></i>
+          </h6>
+        </div>
+      </a>
+    </div>  
+  {% endfor %}
+{% endif %}
+{% endblock %}
