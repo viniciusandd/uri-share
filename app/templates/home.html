@@ -22,6 +22,7 @@
                         </div> <br>
                         <h3 class="title">{{ postagem.titulo }}</h3>
                         <p>{{ postagem.conteudo }}</p>
+                        {% if current_user.id > 1 %}
                         <div class="actions">
                             <button class="btn btnComentarPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-comment-dots"></i></button>
                             {% if postagem.perfil_id == current_user.id %}
@@ -30,6 +31,7 @@
                             <button class="btn btnAvaliarPostagem" postagem_id="{{ postagem.id }}"><i class="fas fa-fw fa-star"></i></button>
                             {% endif %}
                         </div>
+                        {% endif %}
                         <div id="comments{{ postagem.id }}" class="comments">
                             <div class="formComments">
                                 <input id="postagem_id{{ postagem.id }}" name="postagem_id" type="hidden" value="{{ postagem.id }}">
