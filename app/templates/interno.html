@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/podium.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
   <link href="{{ url_for('static', filename='css/tags.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/messages.css') }}" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -143,7 +144,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('ranking') }}">
+        <a class="nav-link" href="{{ url_for('formulario_banir_perfil') }}">
           <i class="fas fa-fw fa-book-dead"></i>
           <span>Banir Perfil</span></a>
       </li>      
@@ -235,6 +236,7 @@
   <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
   <script src="{{ url_for('static', filename='js/categorias.js') }}"></script>
   <script src="{{ url_for('static', filename='js/sugestao_categoria_listar.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/formulario_banir_perfil.js') }}"></script>
 </body>
 
 </html>

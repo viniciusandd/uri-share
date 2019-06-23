@@ -38,7 +38,7 @@ class EditarPerfilForm(FlaskForm):
     sobre           = TextAreaField("sobre", validators=[DataRequired()])
     interesses      = StringField("interesses")
     tags_digitadas  = HiddenField("tags_digitadas")
-    cidade_id       = SelectField("cidade", coerce=int)    
+    cidade_id       = SelectField("cidade", coerce=int)
 
 class PostagemForm(FlaskForm):
     titulo       = StringField("titulo", validators=[DataRequired()])
@@ -50,3 +50,7 @@ class SugestaoCategoriaForm(FlaskForm):
 
 class CategoriaForm(FlaskForm):
     descricao = StringField("descricao", validators=[DataRequired()])
+
+class BanirPerfilForm(FlaskForm):
+    perfil_id = SelectField("perfil", coerce=int)
+    motivo    = TextAreaField("motivo")

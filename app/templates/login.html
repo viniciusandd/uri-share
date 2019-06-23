@@ -11,16 +11,14 @@
     <div class="card-body">
        <form action="" method="POST">
           {{ formulario.csrf_token }}
-          {% with messages = get_flashed_messages() %}
-          {% if messages %}
-          <div class="alert alert-warning" role="alert">
-             <ul class=flashes>
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-             </ul>
-          </div>
-          {% endif %}
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}          
+               <ul class=flashes>
+                  {% for category, message in messages %}
+                     <li class="{{ category }}">{{ message }}</li>
+                  {% endfor %}
+               </ul>
+            {% endif %}
           {% endwith %}          
           <div class="form-group">
              <div class="form-label-group">

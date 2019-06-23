@@ -1,0 +1,28 @@
+.flashes {
+    padding-left:0;
+}
+
+.flashes > li {
+    padding-left:40px;
+}
+
+.message-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    list-style-type: none;
+}
+
+.message-primary {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+    list-style-type: none;    
+}
+
+.message-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    list-style-type: none;    
+}

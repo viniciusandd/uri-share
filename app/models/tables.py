@@ -211,3 +211,17 @@ class SugestaoCategoria(db.Model):
     
     def __repr__(self):
         return "<SugestaoCategoria %r>" % self.descricao
+
+class PerfilBanido(db.Model):
+    __tablename__ = "perfis_banidos"
+    id        = db.Column(db.Integer, primary_key=True)
+    perfil_id = db.Column(db.Integer, db.ForeignKey('perfis.id'), nullable=False)
+    motivo    = db.Column(db.String, nullable=False)
+    perfil    = db.relationship('Perfil', foreign_keys=perfil_id)
+
+    def __init__(self, perfil_id, motivo):
+        self.perfil_id = perfil_id
+        self.motivo    = motivo
+    
+    def __repr__(self):
+        return "<PerfilBanido %r - %r>" % (self.perfil_id, self.motivo)

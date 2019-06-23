@@ -137,12 +137,18 @@ def login():
     formulario = LoginForm()
     if formulario.validate_on_submit():
         perfil = Perfil.query.filter_by(cnpj=formulario.cnpj.data).first()        
-        if perfil and perfil.senha == formulario.senha.data:
-            login_user(perfil)
-            # flash("Login efetuado com sucesso.")
-            return redirect(url_for('home'))
+        if perfil:
+            perfil_banido = PerfilBanido.query.filter_by(perfil_id=perfil.id).first()
+            if not perfil_banido:
+                if perfil.senha == formulario.senha.data:
+                    login_user(perfil)
+                    return redirect(url_for('home'))
+                else:
+                    flash("Credenciais inválidas.", "message-error")
+            else:
+                flash(perfil_banido.motivo, "message-error")
         else:
-            flash("Credenciais inválidas.")
+            flash("Seu CNPJ não foi localizado, tente novamente.", "message-error")
     else:
         print(formulario.errors)
         
@@ -512,4 +518,37 @@ def sugestao_categoria_pendente():
     if bErro:
         return jsonify({"retorno":0})
     
+    return jsonify({"retorno":1})
+
+@app.route("/formulario_banir_perfil", methods=['GET'])
+def formulario_banir_perfil():
+    formulario = BanirPerfilForm()
+    lista = [(g.id, g.razao_social) for g in Perfil.query.order_by('razao_social')]
+    lista = retirando_perfis(lista)
+    formulario.perfil_id.choices = lista
+    return render_template('banir_perfil.html', formulario=formulario)
+
+def retirando_perfis(lista):
+    nova_lista = []
+    for tupla in lista:
+        if tupla[0] > 1: # Administrador
+            perfil_banido = PerfilBanido.query.filter_by(perfil_id=tupla[0]).first()
+            if not perfil_banido:
+                nova_lista.append(tupla)
+    
+    return nova_lista
+
+@app.route("/banir_perfil", methods=['GET'])
+def banir_perfil():
+    perfil_id = request.args.get('perfil_id', 0, type=int)
+    motivo = request.args.get('motivo', '', type=str)
+
+    perfil_banido = PerfilBanido(perfil_id, motivo)
+    db.session.add(perfil_banido)
+
+    try:
+        db.session.commit()
+    except:
+        return jsonify({"retorno":0})
+
     return jsonify({"retorno":1})

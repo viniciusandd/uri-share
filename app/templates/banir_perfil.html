@@ -1,0 +1,40 @@
+{% extends 'interno.html' %}
+
+{% block conteudo %}
+
+<div class="card card-register mx-auto mt-5">
+    <div class="card-header">Banir perfil</div>
+    <div class="card-body">
+        <form action="" method="POST">
+            {{ formulario.csrf_token }}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning" role="alert">
+                <ul class=flashes>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+                </div>
+            {% endif %}
+            {% endwith %}
+            
+            <div class="form-group">
+                <div class="form-label-group">
+                    {{ formulario.perfil_id(id="selectPerfilId", class="form-control", placeholder="Selecione o perfil.") }}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-label-group">
+                    {{ formulario.motivo(id="textAreaMotivo", class="form-control", placeholder="Informe com detalhes o motivo do banimento do perfil.") }}
+                </div>
+            </div>
+
+            <button id="btn-banir-perfil" type="button" class="btn btn-danger btn-block">Banir perfil</button>
+        </form>
+    </div>
+</div>    
+
+{% endblock %}
