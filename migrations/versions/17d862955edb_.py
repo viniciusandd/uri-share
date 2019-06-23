@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d8fdbdd9ac39
+Revision ID: 17d862955edb
 Revises: 
-Create Date: 2019-06-20 16:09:01.212405
+Create Date: 2019-06-23 14:00:36.737821
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd8fdbdd9ac39'
+revision = '17d862955edb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -65,6 +65,13 @@ def upgrade():
     sa.UniqueConstraint('cnpj'),
     sa.UniqueConstraint('razao_social')
     )
+    op.create_table('perfis_banidos',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('perfil_id', sa.Integer(), nullable=False),
+    sa.Column('motivo', sa.String(), nullable=False),
+    sa.ForeignKeyConstraint(['perfil_id'], ['perfis.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('postagens',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('titulo', sa.String(), nullable=False),
@@ -115,6 +122,7 @@ def downgrade():
     op.drop_table('avaliacoes')
     op.drop_table('sugestoes_categorias')
     op.drop_table('postagens')
+    op.drop_table('perfis_banidos')
     op.drop_table('perfis')
     op.drop_table('cidades')
     op.drop_table('estados')
