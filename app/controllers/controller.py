@@ -81,12 +81,12 @@ def registrar():
 
                     db.session.commit()
 
-                    flash("Você foi registrado com sucesso.")
+                    flash("Você foi registrado com sucesso.", "message-success")
                     return redirect(url_for("login"))
             else:
-                flash("As senhas digitadas são diferentes.")            
+                flash("As senhas digitadas são diferentes.", "message-error")            
         else:
-            flash(retorno_validacao[1])
+            flash(retorno_validacao[1], "message-error")
     else:
         print(formulario.errors)
 
@@ -157,7 +157,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    flash("Logout efetuado com sucesso.")
+    flash("Logout efetuado com sucesso.", "message-success")
     return redirect(url_for('login'))
 
 @app.route("/home")
@@ -251,9 +251,9 @@ def perfil_editar():
             print('Erro ao gravar as atualizações no perfil')
 
         if bErro:
-            flash("Falha ao editar o perfil")
+            flash("Falha ao editar o perfil", "message-error")
         else:
-            flash("Perfil atualizado com sucesso")             
+            flash("Perfil atualizado com sucesso", "message-success")
 
     perfil = Perfil.query.filter_by(id=current_user.id).first()
     formulario.id.data             = perfil.id
@@ -434,9 +434,9 @@ def nova_sugestao_categoria():
             print('Falha ao inserir sugestão categoria')
         
         if bErro:
-            flash("Falha ao inserir sugestão categoria")
+            flash("Falha ao inserir sugestão categoria", "message-error")
         else:
-            flash("Sugestão de categoria gravada com sucesso")            
+            flash("Sugestão de categoria gravada com sucesso", "message-success")
                
     return render_template('sugestao_categoria_nova.html', formulario=formulario)
 
@@ -488,9 +488,9 @@ def nova_categoria():
             print('Falha ao inserir categoria')
         
         if bErro:
-            flash("Falha ao inserir categoria")
+            flash("Falha ao inserir categoria", "message-error")
         else:
-            flash("Categoria gravada com sucesso")    
+            flash("Categoria gravada com sucesso", "message-success")
 
     sugestoes = SugestaoCategoria.query.filter_by(status=1).all()        
                
