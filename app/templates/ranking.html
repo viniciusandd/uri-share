@@ -13,6 +13,7 @@
           <th scope="col">Perfil</th>
           <th scope="col">Título</th>
           <th scope="col">Data</th>
+          <th scope="col">Média</th>
         </tr>
       </thead>
       <tbody>
@@ -28,10 +29,16 @@
             <th scope="row">#{{ loop.index }} </th>
             {% endif %}
     
-            <td>{{ postagem.perfil.nome_fantasia }}</td>
+            <td><a href="{{ url_for('perfil', id=postagem.perfil.id) }}">@{{ postagem.perfil.nome_fantasia }}</a></td>
             <td>{{ postagem.titulo }}</td>
             <td>{{ postagem.formatar_data("brasileiro") }}</td>
-          </tr> 
+            <td>
+                {% if postagem.media_avaliacao %}
+                <button type="button" class="btn btn-primary btn-sm">{{ postagem.media_avaliacao }}</button>
+                {% else %}
+                <button type="button" class="btn btn-primary btn-sm">0.0</button>
+                {% endif %}
+            </tr> 
         {% endfor %}
       </tbody>
   </table>    
@@ -41,25 +48,25 @@
 <div id="podium-box" class="row" style="height: 300px">
   <div class="col-md-4 step-container m-0 p-0">
     <div>
-      {{ podium[1].perfil.nome_fantasia }} - {{ podium[1].titulo }}
+      <a href="{{ url_for('perfil', id=podium[1].perfil.id) }}">@{{ podium[1].perfil.nome_fantasia }}</a> - {{ podium[1].titulo }}
     </div>
-    <div id="second-step" class="bg-light-pink step centerBoth podium-number">
+    <div id="second-step" class="bg-light-grey step centerBoth podium-number">
       #2
     </div>
   </div>
   <div class="col-md-4 step-container m-0 p-0">
     <div>
-      {{ podium[0].perfil.nome_fantasia }} - {{ podium[0].titulo }}
+      <a href="{{ url_for('perfil', id=podium[0].perfil.id) }}">@{{ podium[0].perfil.nome_fantasia }}</a> - {{ podium[0].titulo }}
     </div>
-    <div id="first-step" class="bg-light-green step centerBoth podium-number">
+    <div id="first-step" class="bg-light-grey step centerBoth podium-number">
       #1
     </div>
   </div>
   <div class="col-md-4 step-container m-0 p-0">
     <div>
-      {{ podium[2].perfil.nome_fantasia }} - {{ podium[2].titulo }}
+      <a href="{{ url_for('perfil', id=podium[2].perfil.id) }}">@{{ podium[2].perfil.nome_fantasia }}</a> - {{ podium[2].titulo }}
     </div>
-    <div id="third-step" class="bg-light-purple step centerBoth podium-number">
+    <div id="third-step" class="bg-light-grey step centerBoth podium-number">
       #3
     </div>
   </div>
