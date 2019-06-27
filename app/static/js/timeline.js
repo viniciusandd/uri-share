@@ -83,26 +83,61 @@ $(".btnExcluirPostagem").click(function() {
 
 $(".btnAvaliarPostagem").click(function() {
     let postagem_id = $(this).attr('postagem_id');
-    bootbox.prompt({
-        title: "Arraste para avaliar essa postagem (0 - 100).",
-        inputType: 'range',
-        min: 0,
-        max: 100,
-        step: 10,
-        value: 50,
-        callback: function (result) {
-            console.log('This was logged in the callback: ' + result);
-            $.getJSON($SCRIPT_ROOT + '/nova_avaliacao', {
-                postagem_id : postagem_id,
-                nota : result
-            }, function(data) {
-                console.log(data.status);
-                if (data.status == 0) {
-                    bootbox.alert(
-                        "Ocorreram falhas ao inserir sua avaliação, tente novamente."
-                    );
+
+    let mensagem = '<div class="slidecontainer">';
+    mensagem    += '<input type="range" min="0" max="100" value="50" class="slider" id="myRange">';
+    mensagem    += '</div>';
+    mensagem    += '<div>';
+    mensagem    += '<button id="btnNota" type="button" class="btn btn-secondary">';
+    mensagem    += 'Nota: <span id="span-nota" class="badge badge-light">50</span>';
+    mensagem    += '</button>';
+    mensagem    += '</div>';
+
+    var dialog = bootbox.dialog({
+        title: 'Arraste para avaliar essa postagem (0 - 100)',
+        message: mensagem,
+        size: 'large',
+        buttons: {
+            cancel: {
+                label: "Cancelar",
+                className: 'btn-danger',
+                callback: function(){
+                    console.log('Avaliação cancelada');
                 }
-            });            
+            },
+            ok: {
+                label: "Avaliar",
+                className: 'btn-info',
+                callback: function(){
+                    console.log('Custom OK clicked');
+                    let nota = $('#myRange').val();
+                    console.log(nota);
+
+                    $.ajax({
+                        url: $SCRIPT_ROOT + "/nova_avaliacao",
+                        method: "GET",
+                        dataType: "json",
+                        data: {
+                            postagem_id: postagem_id,
+                            nota: nota
+                        },
+                        success: function(data) {
+                            console.log(data.status);
+                            if (data.status == 0) {
+                                bootbox.alert(
+                                    "Ocorreram falhas ao inserir sua avaliação, tente novamente."
+                                );
+                            }                            
+                        }
+                    })
+                }
+            }
         }
-    });    
+    });
+});
+
+$(document).on("change","#myRange",function() {
+    let nota = $('#myRange').val();
+    console.log(nota);
+    $('#span-nota').html(nota);
 });
